@@ -1,0 +1,348 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+/* 👇 Make sure the styles are applied in the correct order */
+@layer mantine, mantine-datatable;
+/* 
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #f9f9f9;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+:root,
+* {
+  font-family: 'Inter', sans-serif;
+} */
+
+.leaflet-top.leaflet-right {
+  top: 100px !important;
+  right: 15px !important;
+}
+
+.leaflet-touch .leaflet-bar {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  background: linear-gradient(to bottom, #0b9cec, #274a9b) !important;
+  width: 35px !important;
+  height: 35px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
+  font-weight: bold !important;
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.leaflet-control-zoom-in {
+  margin-bottom: 10px !important;
+}
+
+.leaflet-control-zoom-in:hover,
+.leaflet-control-zoom-out:hover {
+  background-color: #f0f0f0 !important;
+}
+
+/* .flag-dropdown {
+  background-color: #f8f9fa !important;
+  border: none !important;
+  border-radius: 6px !important;
+} */
+
+/* map style scroll bar styling*/
+
+.map-style-scroll-container {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  padding: 16px 0;
+  /* Set a max-width based on your specific needs */
+  max-width: calc(5 * 64px + 5 * 10px);
+}
+
+/* For Webkit browsers like Chrome and Safari */
+.map-style-scroll-container::-webkit-scrollbar {
+  height: 10px; /* Height of the scrollbar */
+  border-radius: 10px; /* Roundness of the scrollbar */
+  background-color: #e4eefc; /* Background of the scrollbar track */
+}
+
+.map-style-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #1483d3; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Roundness of the scrollbar thumb */
+  border: 2px solid transparent; /* Makes the thumb's corners round */
+  background-clip: padding-box; /* Prevents the scrollbar's thumb background from overlaying the border */
+  cursor: pointer !important;
+}
+
+.map-style-scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: #2452a3; /* Color of the scrollbar thumb on hover */
+}
+
+/* For Firefox */
+.map-style-scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent; /* thumb and track color */
+}
+
+/* For IE and Edge */
+.map-style-scroll-container {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.map-style-scroll-container img:hover {
+  cursor: pointer; /* Changes the cursor to a pointer when hovering over the images */
+}
+.fadeIn {
+  animation: 0.5s fadeIn;
+}
+
+.fadeOut {
+  animation: 0.5s fadeOut;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.sidebar-transition-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.sidebar-transition-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+  transition: opacity 500ms, transform 500ms;
+}
+.sidebar-transition-exit {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.sidebar-transition-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.leaflet-container {
+  z-index: 1;
+}
+
+
+
+.fullScreenButton {
+  background: linear-gradient(to bottom, #0b9cec, #274a9b);
+  width: 35px;
+  height: 35px;
+  line-height: 40px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.leaflet-draw {
+  z-index: 100 !important;
+  position: absolute !important;
+  right: 43px;
+  top: 95px;
+}
+
+/* .hide-controls {
+    display: none !important;
+}
+
+.show-controls {
+    display: block !important;
+} */
+
+.leaflet-measure-toggle {
+  background: linear-gradient(to bottom, #0b9cec, #274a9b);
+  width: 35px !important;
+  height: 35px !important;
+  border: none;
+  border-radius: 50% !important;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+.leaflet-measure-toggle::before {
+  color: white;
+  content: '';
+  display: block;
+  width: 22px;
+  height: 22px;
+  background-image: url('/measure.png');
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.leaflet-measure-contents {
+  padding: 10px;
+  display: none;
+  background-color: white;
+}
+.leaflet-control-measure h3 {
+  margin: 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+}
+.leaflet-measure-actions {
+  margin: 0;
+  padding: 5px 0 0;
+  text-align: right;
+  list-style: none;
+  list-style-image: none;
+}
+.leaflet-control-measure a.start {
+  display: block;
+  width: auto;
+  padding: 0 5px 0 25px;
+  border: 0;
+  text-align: left;
+  background-image: url('data:image/svg+xml;utf8,<svg t="1599647825038" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8356" width="16" height="16"><path d="M113.777778 682.666667H0v227.555555c0 62.577778 51.2 113.777778 113.777778 113.777778h227.555555v-113.777778H113.777778v-227.555555zM113.777778 113.777778h227.555555V0H113.777778C51.2 0 0 51.2 0 113.777778v227.555555h113.777778V113.777778z m796.444444-113.777778h-227.555555v113.777778h227.555555v227.555555h113.777778V113.777778c0-62.577778-51.2-113.777778-113.777778-113.777778z m0 910.222222h-227.555555v113.777778h227.555555c62.577778 0 113.777778-51.2 113.777778-113.777778v-227.555555h-113.777778v227.555555zM512 284.444444C386.275556 284.444444 284.444444 386.275556 284.444444 512s101.831111 227.555556 227.555556 227.555556 227.555556-101.831111 227.555556-227.555556-101.831111-227.555556-227.555556-227.555556z m0 341.333334c-62.577778 0-113.777778-51.2-113.777778-113.777778s51.2-113.777778 113.777778-113.777778 113.777778 51.2 113.777778 113.777778-51.2 113.777778-113.777778 113.777778z" p-id="8357"></path></svg>');
+  background-repeat: no-repeat;
+  background-position: 5px 50%;
+  color: #000000;
+  background-size: 14px 14px;
+  background-color: transparent;
+  text-decoration: none;
+}
+.leaflet-control-measure a.start:hover {
+  opacity: 0.5;
+  background-color: transparent;
+}
+.leaflet-measure-expanded .leaflet-measure-contents {
+  background-color: white;
+  display: block;
+}
+.leaflet-measure-map {
+  cursor: crosshair !important;
+}
+.leaflet-measure-lable {
+  padding: 1px 7px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  color: #000000;
+  border-radius: 4px;
+  white-space: nowrap;
+  display: inline-grid;
+  position: absolute;
+}
+.leaflet-measure-lable .content {
+  width: auto;
+  display: inline-block;
+}
+.leaflet-measure-lable .close {
+  width: 15px;
+  height: 15px;
+  position: relative !important;
+  top: 0px !important;
+  left: 5px !important;
+  cursor: pointer;
+}
+.leaflet-measure-lable .close .icon {
+  width: 2px;
+  height: 2px;
+  color: #ffffff;
+  cursor: pointer;
+  top: 2px;
+  position: relative;
+}
+
+/*legend scroll bar styling*/
+/* For Webkit browsers like Chrome and Safari */
+.legend-scroll-container::-webkit-scrollbar {
+  width: 10px; /* Height of the scrollbar */
+  border-radius: 10px; /* Roundness of the scrollbar */
+  background-color: #e4eefc; /* Background of the scrollbar track */
+}
+
+.legend-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #1483d3; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Roundness of the scrollbar thumb */
+  border: 2px solid transparent; /* Makes the thumb's corners round */
+  background-clip: padding-box; /* Prevents the scrollbar's thumb background from overlaying the border */
+  cursor: pointer !important;
+}
+
+.legend-scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: #2452a3; /* Color of the scrollbar thumb on hover */
+}
+
+/* For Firefox */
+.legend-scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent; /* thumb and track color */
+}
+
+/* For IE and Edge */
+.legend-scroll-container {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.legend-scroll-container img:hover {
+  cursor: pointer; /* Changes the cursor to a pointer when hovering over the images */
+}
+
+.ribbon-2 {
+  --f: 10px; /* control the folded part*/
+  --r: 15px; /* control the ribbon shape */
+  --t: 10px; /* the top offset */
+
+  position: absolute;
+  inset: var(--t) calc(-1 * var(--f)) auto auto;
+  padding: 0 10px var(--f) calc(10px + var(--r));
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--f)),
+    calc(100% - var(--f)) 100%,
+    calc(100% - var(--f)) calc(100% - var(--f)),
+    0 calc(100% - var(--f)),
+    var(--r) calc(50% - var(--f) / 2)
+  );
+  background: #bd1550;
+  box-shadow: 0 calc(-1 * var(--f)) 0 inset #0005;
+}
