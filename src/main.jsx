@@ -7,7 +7,7 @@ import { MantineProvider } from '@mantine/core';
 import Navbar from './components/Navbar';
 
 
-const router = createBrowserRouter ([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <Map />,
@@ -18,8 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
   <React.StrictMode>
     <MantineProvider>
-
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </MantineProvider>
   </React.StrictMode>
 )

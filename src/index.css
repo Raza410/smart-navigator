@@ -3,6 +3,7 @@
 @import 'tailwindcss/utilities';
 /* 👇 Make sure the styles are applied in the correct order */
 @layer mantine, mantine-datatable;
+
 /* 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -24,6 +25,9 @@
 * {
   font-family: 'Inter', sans-serif;
 } */
+* {
+  font-family: 'Times New Roman', Times, serif;
+}
 
 .leaflet-top.leaflet-right {
   top: 100px !important;
@@ -78,27 +82,36 @@
 
 /* For Webkit browsers like Chrome and Safari */
 .map-style-scroll-container::-webkit-scrollbar {
-  height: 10px; /* Height of the scrollbar */
-  border-radius: 10px; /* Roundness of the scrollbar */
-  background-color: #e4eefc; /* Background of the scrollbar track */
+  height: 10px;
+  /* Height of the scrollbar */
+  border-radius: 10px;
+  /* Roundness of the scrollbar */
+  background-color: #e4eefc;
+  /* Background of the scrollbar track */
 }
 
 .map-style-scroll-container::-webkit-scrollbar-thumb {
-  background-color: #1483d3; /* Color of the scrollbar thumb */
-  border-radius: 10px; /* Roundness of the scrollbar thumb */
-  border: 2px solid transparent; /* Makes the thumb's corners round */
-  background-clip: padding-box; /* Prevents the scrollbar's thumb background from overlaying the border */
+  background-color: #1483d3;
+  /* Color of the scrollbar thumb */
+  border-radius: 10px;
+  /* Roundness of the scrollbar thumb */
+  border: 2px solid transparent;
+  /* Makes the thumb's corners round */
+  background-clip: padding-box;
+  /* Prevents the scrollbar's thumb background from overlaying the border */
   cursor: pointer !important;
 }
 
 .map-style-scroll-container::-webkit-scrollbar-thumb:hover {
-  background-color: #2452a3; /* Color of the scrollbar thumb on hover */
+  background-color: #2452a3;
+  /* Color of the scrollbar thumb on hover */
 }
 
 /* For Firefox */
 .map-style-scroll-container {
   scrollbar-width: thin;
-  scrollbar-color: #888 transparent; /* thumb and track color */
+  scrollbar-color: #888 transparent;
+  /* thumb and track color */
 }
 
 /* For IE and Edge */
@@ -107,8 +120,10 @@
 }
 
 .map-style-scroll-container img:hover {
-  cursor: pointer; /* Changes the cursor to a pointer when hovering over the images */
+  cursor: pointer;
+  /* Changes the cursor to a pointer when hovering over the images */
 }
+
 .fadeIn {
   animation: 0.5s fadeIn;
 }
@@ -121,6 +136,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -130,6 +146,7 @@
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -139,15 +156,18 @@
   opacity: 0;
   transform: translateX(-100%);
 }
+
 .sidebar-transition-enter-active {
   opacity: 1;
   transform: translateX(0%);
   transition: opacity 500ms, transform 500ms;
 }
+
 .sidebar-transition-exit {
   opacity: 1;
   transform: translateX(0%);
 }
+
 .sidebar-transition-exit-active {
   opacity: 0;
   transform: translateX(-100%);
@@ -205,6 +225,7 @@
   cursor: pointer;
   position: relative;
 }
+
 .leaflet-measure-toggle::before {
   color: white;
   content: '';
@@ -218,16 +239,19 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .leaflet-measure-contents {
   padding: 10px;
   display: none;
   background-color: white;
 }
+
 .leaflet-control-measure h3 {
   margin: 0;
   padding-bottom: 5px;
   border-bottom: 1px solid #ddd;
 }
+
 .leaflet-measure-actions {
   margin: 0;
   padding: 5px 0 0;
@@ -235,6 +259,7 @@
   list-style: none;
   list-style-image: none;
 }
+
 .leaflet-control-measure a.start {
   display: block;
   width: auto;
@@ -249,17 +274,21 @@
   background-color: transparent;
   text-decoration: none;
 }
+
 .leaflet-control-measure a.start:hover {
   opacity: 0.5;
   background-color: transparent;
 }
+
 .leaflet-measure-expanded .leaflet-measure-contents {
   background-color: white;
   display: block;
 }
+
 .leaflet-measure-map {
   cursor: crosshair !important;
 }
+
 .leaflet-measure-lable {
   padding: 1px 7px;
   background-color: #ffffff;
@@ -270,10 +299,12 @@
   display: inline-grid;
   position: absolute;
 }
+
 .leaflet-measure-lable .content {
   width: auto;
   display: inline-block;
 }
+
 .leaflet-measure-lable .close {
   width: 15px;
   height: 15px;
@@ -282,6 +313,7 @@
   left: 5px !important;
   cursor: pointer;
 }
+
 .leaflet-measure-lable .close .icon {
   width: 2px;
   height: 2px;
@@ -294,27 +326,36 @@
 /*legend scroll bar styling*/
 /* For Webkit browsers like Chrome and Safari */
 .legend-scroll-container::-webkit-scrollbar {
-  width: 10px; /* Height of the scrollbar */
-  border-radius: 10px; /* Roundness of the scrollbar */
-  background-color: #e4eefc; /* Background of the scrollbar track */
+  width: 10px;
+  /* Height of the scrollbar */
+  border-radius: 10px;
+  /* Roundness of the scrollbar */
+  background-color: #e4eefc;
+  /* Background of the scrollbar track */
 }
 
 .legend-scroll-container::-webkit-scrollbar-thumb {
-  background-color: #1483d3; /* Color of the scrollbar thumb */
-  border-radius: 10px; /* Roundness of the scrollbar thumb */
-  border: 2px solid transparent; /* Makes the thumb's corners round */
-  background-clip: padding-box; /* Prevents the scrollbar's thumb background from overlaying the border */
+  background-color: #1483d3;
+  /* Color of the scrollbar thumb */
+  border-radius: 10px;
+  /* Roundness of the scrollbar thumb */
+  border: 2px solid transparent;
+  /* Makes the thumb's corners round */
+  background-clip: padding-box;
+  /* Prevents the scrollbar's thumb background from overlaying the border */
   cursor: pointer !important;
 }
 
 .legend-scroll-container::-webkit-scrollbar-thumb:hover {
-  background-color: #2452a3; /* Color of the scrollbar thumb on hover */
+  background-color: #2452a3;
+  /* Color of the scrollbar thumb on hover */
 }
 
 /* For Firefox */
 .legend-scroll-container {
   scrollbar-width: thin;
-  scrollbar-color: #888 transparent; /* thumb and track color */
+  scrollbar-color: #888 transparent;
+  /* thumb and track color */
 }
 
 /* For IE and Edge */
@@ -323,26 +364,34 @@
 }
 
 .legend-scroll-container img:hover {
-  cursor: pointer; /* Changes the cursor to a pointer when hovering over the images */
+  cursor: pointer;
+  /* Changes the cursor to a pointer when hovering over the images */
 }
 
 .ribbon-2 {
-  --f: 10px; /* control the folded part*/
-  --r: 15px; /* control the ribbon shape */
-  --t: 10px; /* the top offset */
+  --f: 10px;
+  /* control the folded part*/
+  --r: 15px;
+  /* control the ribbon shape */
+  --t: 10px;
+  /* the top offset */
 
   position: absolute;
   inset: var(--t) calc(-1 * var(--f)) auto auto;
   padding: 0 10px var(--f) calc(10px + var(--r));
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    100% calc(100% - var(--f)),
-    calc(100% - var(--f)) 100%,
-    calc(100% - var(--f)) calc(100% - var(--f)),
-    0 calc(100% - var(--f)),
-    var(--r) calc(50% - var(--f) / 2)
-  );
+  clip-path: polygon(0 0,
+      100% 0,
+      100% calc(100% - var(--f)),
+      calc(100% - var(--f)) 100%,
+      calc(100% - var(--f)) calc(100% - var(--f)),
+      0 calc(100% - var(--f)),
+      var(--r) calc(50% - var(--f) / 2));
   background: #bd1550;
   box-shadow: 0 calc(-1 * var(--f)) 0 inset #0005;
+}
+
+.building-image img {
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
 }

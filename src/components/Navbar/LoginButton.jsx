@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { CgProfile } from 'react-icons/cg';
 import { FaSignInAlt } from 'react-icons/fa';
 import { Button, Menu } from '@mantine/core';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { menuBarItems } from '../../utils/menuBarItems';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import useUserInfo, { setUserInfo } from '../../hooks/useUserInfo';
@@ -28,9 +28,9 @@ function LoginButton() {
       userRole === 'super admin'
         ? menuBarItems
         : menuBarItems.filter(
-            (route) =>
-              route.to !== '/organization' && route.to !== '/activity-log'
-          );
+          (route) =>
+            route.to !== '/organization' && route.to !== '/activity-log'
+        );
     // Only include usermanagement for admin or super admin
     if (userRole !== 'admin' && userRole !== 'super admin') {
       filteredMenuBarItems = filteredMenuBarItems.filter(

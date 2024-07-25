@@ -40,21 +40,21 @@ export default () => {
     <Transition mounted={include} transition="slide-down" duration={500}>
       {(transitionStyles) => (
         <div
-          style={{ zIndex: 1, position: 'relative', ...transitionStyles }}
+          style={{ zIndex: 1, position: 'relative' }}
           className="bg-gradient-to-bl from-[#0B9CEC] shadow-md to-[#540c87] mt-6 mr-3 ml-5 p-3 flex items-center rounded-[12px] transition-transform duration-300 h-[63px] w-[97%] "
         >
           {/* {pathname === '/' && ( */}
-            <Burger
-              // opened={opened}
-              // onClick={() => {
-              //   toggle();
-              //   // setSidebarState(!opened)
-              // }}
-              aria-label="Toggle navigation"
-              style={{ border: 'none', outline: 'none' }}
-              color="#FFFFFF"
-              size="20"
-            />
+          <Burger
+            // opened={opened}
+            // onClick={() => {
+            //   toggle();
+            //   // setSidebarState(!opened)
+            // }}
+            aria-label="Toggle navigation"
+            style={{ border: 'none', outline: 'none' }}
+            color="#FFFFFF"
+            size="20"
+          />
           {/* )} */}
           <Link to="/">
             <h1 className="text-white text-2xl font-black italic mx-2.5">
@@ -65,7 +65,7 @@ export default () => {
             <NavItemsOrSearchBar />
           </div>
           <div className="ml-auto flex mr-2 items-center">
-          {/* <UploadProgress /> */}
+            {/* <UploadProgress /> */}
             {/* <LoginButton /> */}
           </div>
         </div>
@@ -99,32 +99,11 @@ const NavItemsOrSearchBar = () => {
         exitDuration={500}
       >
         {(transitionStyles) => (
-          <div style={{ ...transitionStyles }}>
+          <div >
             <GeoSearch />
           </div>
         )}
       </Transition>
-      {/* <Transition
-        mounted={showNavLinks}
-        transition="slide-left"
-        duration={500}
-        exitDuration={500}
-      >
-        {(transitionStyles) => (
-          <div style={{ ...transitionStyles }}>
-            Assuming navItems is defined elsewhere
-            {navItems.map((item, index) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="truncate text-white mx-4 focus:border-b-2 active:border-b-2 focus:border-gray-300 active:border-gray-200 py-[2px] hover:text-gray-200"
-              >
-                {item.text}
-              </Link>
-            ))}
-          </div>
-        )}
-      </Transition> */}
     </div>
   );
 };

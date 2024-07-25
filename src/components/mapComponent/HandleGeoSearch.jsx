@@ -1,18 +1,47 @@
 import { Marker, useMap } from "react-leaflet";
 import useSelectedGeosearch from "../../hooks/useSelectedGeosearch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function HandleGeoSearch() {
     const selectedLocation = useSelectedGeosearch();
-    const mapInstance = useMap();
-    useEffect(() => {
-        if (selectedLocation && selectedLocation.x !== undefined && selectedLocation.y !== undefined) {
-            const newLatLng = [selectedLocation.y, selectedLocation.x]; // Adjust according to your data structure
-            mapInstance.flyTo(newLatLng, 14); // Adjust zoom level as needed
-        }
-    }, [selectedLocation, mapInstance]);
+    const map = useMap();
+    const [markerPosition, setMarkerPosition] = useState(null);
 
-    return (selectedLocation && selectedLocation.x !== undefined && selectedLocation.y !== undefined)
-        ? <Marker position={[selectedLocation.y, selectedLocation.x]} />
-        : null;
+    useEffect(() => {
+        if (selectedLocation && selectedLocation.cui_building && selectedLocation.cui_building.geom) {
+            const coordinates = selectedLocation.cui_building.geom.coordinates[0][0].map(coord => [coord[1], coord[0]]);
+            const bounds = calculateBounds(coordinates);
+            const center = calculateCenter(bounds);
+            setMarkerPosition(center);
+            map.flyToBounds(bounds); // Adjust zoom level to fit the bounding box
+        }
+    }, [selectedLocation, map]);
+
+    const calculateBounds = (coords) => {
+        let minLat = coords[0][0];
+        let maxLat = coords[0][0];
+        let minLng = coords[0][1];
+        let maxLng = coords[0][1];
+
+        for (let i = 1; i < coords.length; i++) {
+            const lat = coords[i][0];
+            const lng = coords[i][1];
+            if (lat < minLat) minLat = lat;
+            if (lat > maxLat) maxLat = lat;
+            if (lng < minLng) minLng = lng;
+            if (lng > maxLng) maxLng = lng;
+        }
+
+        return [[minLat, minLng], [maxLat, maxLng]];
+    };
+
+    const calculateCenter = (bounds) => {
+        const lat = (bounds[0][0] + bounds[1][0]) / 2;
+        const lng = (bounds[0][1] + bounds[1][1]) / 2;
+        return [lat, lng];
+    };
+
+    return (
+        markerPosition && <Marker position={markerPosition} />
+    );
 }
