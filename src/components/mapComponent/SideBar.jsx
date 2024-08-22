@@ -23,7 +23,12 @@ export default function Sidebar({ selectedBuilding, onClose }) {
     };
 
     return (
-        <div className="fixed inset-y-0 right-0 max-w-96 bg-white shadow-lg z-50 overflow-y-auto">
+        // <div className="fixed inset-y-0 right-0 max-w-96 bg-white shadow-lg z-50 overflow-y-auto">
+        // <div className="fixed bottom-0 inset-x-0 bg-white shadow-lg z-50 overflow-y-auto md:relative md:top-0 md:bottom-auto md:max-w-96 md:w-full md:h-auto h-64">
+
+
+        <div className="fixed bottom-0 md:inset-y-0 right-0 bg-white shadow-lg z-50 overflow-y-auto md:max-w-96 md:h-auto h-96">
+
             <div className="p-6">
                 <div className="flex justify-end">
                     <button onClick={onClose} className="text-gray-500 hover:text-gray-600 focus:outline-none">

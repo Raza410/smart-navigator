@@ -2,6 +2,7 @@ import { Burger, Transition } from '@mantine/core';
 import { useEffect, useRef, useState } from 'react';
 // import { navItems } from '../../utils/navItems';
 import { Link, useLocation, useNavigation } from 'react-router-dom';
+import CUILogo from '../../../public/assets/COMSATS-University-logo.png'
 // import LoginButton from './LoginButton';
 import GeoSearch from '../mapComponent/GeoSearch';
 
@@ -41,7 +42,7 @@ export default () => {
       {(transitionStyles) => (
         <div
           style={{ zIndex: 1, position: 'relative' }}
-          className="bg-gradient-to-bl from-[#0B9CEC] shadow-md to-[#540c87] mt-6 mr-3 ml-5 p-3 flex items-center rounded-[12px] transition-transform duration-300 h-[63px] w-[97%] "
+          className="bg-gradient-to-bl from-[#0B9CEC] shadow-md to-[#540c87] mt-6 mr-3 ml-5 p-3 flex items-center rounded-[12px] transition-transform duration-300 h-[63px] w-[97%] search-bar"
         >
           {/* {pathname === '/' && ( */}
           <Burger
@@ -56,11 +57,17 @@ export default () => {
             size="20"
           />
           {/* )} */}
-          <Link to="/">
+          <div className='w-14 h-auto'>
+            <img
+              src={CUILogo}
+              alt="University Logo"
+              className="h-auto md:w-20 md:h-auto px-1"
+            />          </div>
+          {/* <Link to="/">
             <h1 className="text-white text-2xl font-black italic mx-2.5">
               CUI
             </h1>
-          </Link>
+          </Link> */}
           <div className="flex items-center space-x-1.5 gap-8">
             <NavItemsOrSearchBar />
           </div>
@@ -69,6 +76,7 @@ export default () => {
             {/* <LoginButton /> */}
           </div>
         </div>
+
       )}
     </Transition>
   );

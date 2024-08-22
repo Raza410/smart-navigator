@@ -26,14 +26,6 @@ const DrawTool = ({ onCreated }) => {
 
     return (
         <>
-            <div
-                title='Draw Tool'
-                className='rounded-full text-white cursor-pointer'
-                style={{ background: 'linear-gradient(to bottom, #0B9CEC, #274A9B)', padding: '10px' }}
-                onClick={handleIconClick}
-            >
-                <FaDrawPolygon size={16} />
-            </div>
             <FeatureGroup>
                 <EditControl
                     position="topright"

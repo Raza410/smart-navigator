@@ -395,3 +395,62 @@
   height: 250px;
   object-fit: cover;
 }
+
+
+
+@media (max-width: 768px) {
+  .search-bar {
+    width: 97%;
+    max-width: none;
+    margin-left: 5px;
+  }
+
+  .leaflet-control-zoom {
+    position: absolute !important;
+    left: -16px;
+    top: 10px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .search-bar {
+    width: 96%;
+  }
+
+  .leaflet-control-zoom {
+    right: 15px;
+    top: 15px;
+
+  }
+}
+
+@media (max-width: 1440px) {
+  .search-bar {
+    width: 96%;
+
+  }
+
+  .leaflet-control-zoom {
+    right: 20px;
+    top: 20px;
+
+  }
+}
+
+
+/* Add this to your global CSS or Tailwind config */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.sidebar {
+  animation: slideUp 0.3s ease-out;
+}

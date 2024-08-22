@@ -52,12 +52,21 @@ const MapStyle = ({ onStyleChange }) => {
           keepMounted
         >
           {(transitionStyle) => (
-            <div ref={clickOutsideRef} style={{ ...transitionStyle, zIndex: 402 }} className={`shadow-2xl fixed right-4 bottom-8 overflow-hidden`}>
-              <div className="z-[410] bg-white rounded-lg shadow-lg mt-2 p-4 relative">
-                <button onClick={() => setOpened(false)} className="absolute top-4 right-4 font-bold text-base">
+            <div
+              ref={clickOutsideRef}
+              style={{ ...transitionStyle, zIndex: 402 }}
+              className={`fixed right-4 bottom-16 md:bottom-16 md:right-8 overflow-hidden shadow-2xl`}
+            >
+              <div
+                className="bg-white rounded-lg shadow-lg mt-2 p-4 relative w-80 md:w-96"
+              >
+                <button
+                  onClick={() => setOpened(false)}
+                  className="absolute top-4 right-4 text-xl md:text-2xl font-bold"
+                >
                   <FaTimes />
                 </button>
-                <p className="font-bold text-base">CHANGE LAYER</p>
+                <p className="font-bold text-lg md:text-xl">CHANGE LAYER</p>
                 <div className="map-style-scroll-container">
                   {mapStyles.map((style, index) => (
                     <div
@@ -65,15 +74,23 @@ const MapStyle = ({ onStyleChange }) => {
                       onClick={() => {
                         setSelectedStyle(style);
                         style.method();
-                        setOpened(false)
+                        setOpened(false);
                       }}
-                      className={`flex-shrink-0 p-2 hover:bg-gray-100 rounded ${selectedStyle.title === style.title ? 'bg-gray-200' : ''}`}>
-                      <img src={style.img} alt={style.title} title={style.title} className="w-14 h-14 rounded-full object-cover" />
+                      className={`flex-shrink-0 p-2 hover:bg-gray-100 rounded ${selectedStyle.title === style.title ? 'bg-gray-200' : ''
+                        }`}
+                    >
+                      <img
+                        src={style.img}
+                        alt={style.title}
+                        title={style.title}
+                        className="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover"
+                      />
                     </div>
                   ))}
                 </div>
               </div>
             </div>
+
           )}
         </Transition>
       </Box>
