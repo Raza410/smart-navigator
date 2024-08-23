@@ -55,10 +55,10 @@ const MapStyle = ({ onStyleChange }) => {
             <div
               ref={clickOutsideRef}
               style={{ ...transitionStyle, zIndex: 402 }}
-              className={`fixed right-4 bottom-16 md:bottom-16 md:right-8 overflow-hidden shadow-2xl`}
+              className={`fixed transition-all bottom-16 md:bottom-20 md:right-8 overflow-hidden shadow-2xl changeLayer`}
             >
               <div
-                className="bg-white rounded-lg shadow-lg mt-2 p-4 relative w-80 md:w-96"
+                className="bg-white rounded-lg shadow-lg mt-2 p-4 relative w-72 md:w-96"
               >
                 <button
                   onClick={() => setOpened(false)}

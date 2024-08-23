@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function Sidebar({ selectedBuilding, onClose }) {
     const [departments, setDepartments] = useState([]);
+    const [sidebarHeight, setSidebarHeight] = useState(384); // Initial height in pixels (e.g., 384px which is equivalent to h-96)
+    const sidebarRef = useRef(null);
 
     useEffect(() => {
         if (selectedBuilding.building_name) {
@@ -22,13 +24,29 @@ export default function Sidebar({ selectedBuilding, onClose }) {
         }
     };
 
+    const handleTouchStart = (e) => {
+        sidebarRef.current.startY = e.touches[0].clientY;
+        sidebarRef.current.startHeight = sidebarHeight;
+    };
+
+    const handleTouchMove = (e) => {
+        const touchY = e.touches[0].clientY;
+        const heightDifference = sidebarRef.current.startY - touchY;
+        const newHeight = Math.min(Math.max(sidebarRef.current.startHeight + heightDifference, 200), window.innerHeight);
+        setSidebarHeight(newHeight);
+    };
+
     return (
-        // <div className="fixed inset-y-0 right-0 max-w-96 bg-white shadow-lg z-50 overflow-y-auto">
-        // <div className="fixed bottom-0 inset-x-0 bg-white shadow-lg z-50 overflow-y-auto md:relative md:top-0 md:bottom-auto md:max-w-96 md:w-full md:h-auto h-64">
-
-
-        <div className="fixed bottom-0 md:inset-y-0 right-0 bg-white shadow-lg z-50 overflow-y-auto md:max-w-96 md:h-auto h-96">
-
+        <div
+            className="fixed bottom-0 md:inset-y-0  right-0 bg-white shadow-lg z-50 overflow-y-auto md:max-w-96 md:h-auto"
+            style={{ height: `${sidebarHeight}px` }}
+            ref={sidebarRef}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+        >
+            <div className="w-full flex justify-center items-center py-2 cursor-pointer">
+                <div className="w-12 h-1 bg-gray-400 rounded-full"></div>
+            </div>
             <div className="p-6">
                 <div className="flex justify-end">
                     <button onClick={onClose} className="text-gray-500 hover:text-gray-600 focus:outline-none">

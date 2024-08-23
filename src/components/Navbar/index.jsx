@@ -42,7 +42,7 @@ export default () => {
       {(transitionStyles) => (
         <div
           style={{ zIndex: 1, position: 'relative' }}
-          className="bg-gradient-to-bl from-[#0B9CEC] shadow-md to-[#540c87] mt-6 mr-3 ml-5 p-3 flex items-center rounded-[12px] transition-transform duration-300 h-[63px] w-[97%] search-bar"
+          className="bg-gradient-to-bl from-[#0B9CEC] shadow-md to-[#540c87] mt-6 mr-3 ml-5 p-5 flex items-center rounded-[12px] transition-transform duration-300 h-[63px] w-[97%] search-bar"
         >
           {/* {pathname === '/' && ( */}
           <Burger
@@ -57,7 +57,7 @@ export default () => {
             size="20"
           />
           {/* )} */}
-          <div className='w-14 h-auto'>
+          <div className='w-16 h-auto'>
             <img
               src={CUILogo}
               alt="University Logo"

@@ -53,18 +53,18 @@ export default function GeoSearch() {
 
     return (
         <>
-            <div>
+            <div className='search-container md:ml-5'>
                 <input
                     type="text"
                     placeholder="Search Location"
-                    className="max-w-96 pl-10 pr-10 py-[10px] text-sm text-gray-200 bg-[#4786c7] placeholder:text-gray-200 rounded-full outline-none"
+                    className="w-full md:max-w-90 pl-10 pr-10 py-[10px] text-sm text-gray-200 bg-[#4786c7] placeholder:text-gray-200 rounded-full outline-none"
                     value={searchTerm}
                     onChange={e => {
                         setSearchTerm(e.target.value);
                         setIsSearchManuallyUpdated(true); // Marking the search as manually updated
                     }}
                 />
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-200 w-4 h-4" />
+                <FaSearch className="absolute left-3 md:ml-5 top-1/2 transform -translate-y-1/2 text-gray-200 w-4 h-4" />
                 {searchTerm && (
                     <FaTimes
                         className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-200 w-3 h-3 cursor-pointer"

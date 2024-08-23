@@ -412,6 +412,22 @@
   }
 }
 
+@media (max-width: 368px) {
+  .search-container {
+    width: 88%;
+    max-width: none;
+    margin-left: 5px;
+  }
+
+  .search-container input {
+    padding: 9px 33px;
+  }
+
+
+
+}
+
+
 @media (max-width: 1024px) {
   .search-bar {
     width: 96%;
