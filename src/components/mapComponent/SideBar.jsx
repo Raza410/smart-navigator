@@ -3,7 +3,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function Sidebar({ selectedBuilding, onClose }) {
     const [departments, setDepartments] = useState([]);
-    const [sidebarHeight, setSidebarHeight] = useState(384); // Initial height in pixels (e.g., 384px which is equivalent to h-96)
+    const [sidebarHeight, setSidebarHeight] = useState(384); // Initial height for mobile screens
     const sidebarRef = useRef(null);
 
     useEffect(() => {
@@ -38,8 +38,8 @@ export default function Sidebar({ selectedBuilding, onClose }) {
 
     return (
         <div
-            className="fixed bottom-0 md:inset-y-0  right-0 bg-white shadow-lg z-50 overflow-y-auto md:max-w-96 md:h-auto"
-            style={{ height: `${sidebarHeight}px` }}
+            className="fixed bottom-0 md:inset-y-0 right-0 bg-white shadow-lg z-50 overflow-y-auto md:w-full md:max-w-96"
+            style={{ height: window.innerWidth >= 768 ? '100vh' : `${sidebarHeight}px` }} // Full height on desktop screens
             ref={sidebarRef}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
