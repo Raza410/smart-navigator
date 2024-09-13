@@ -2,7 +2,7 @@ import { Marker, useMap } from "react-leaflet";
 import useSelectedGeosearch from "../../hooks/useSelectedGeosearch";
 import { useEffect, useState } from "react";
 
-export default function HandleGeoSearch() {
+export default function HandleGeoSearch({ onLocationSelected }) {
     const selectedLocation = useSelectedGeosearch();
     const map = useMap();
     const [markerPosition, setMarkerPosition] = useState(null);
@@ -13,9 +13,10 @@ export default function HandleGeoSearch() {
             const bounds = calculateBounds(coordinates);
             const center = calculateCenter(bounds);
             setMarkerPosition(center);
+            onLocationSelected(center); // Pass the centroid to parent component
             map.flyToBounds(bounds); // Adjust zoom level to fit the bounding box
         }
-    }, [selectedLocation, map]);
+    }, [selectedLocation, map, onLocationSelected]);
 
     const calculateBounds = (coords) => {
         let minLat = coords[0][0];
@@ -42,6 +43,9 @@ export default function HandleGeoSearch() {
     };
 
     return (
-        markerPosition && <Marker position={markerPosition} />
+        <>
+            {markerPosition && <Marker position={markerPosition} />}
+        </>
     );
 }
+

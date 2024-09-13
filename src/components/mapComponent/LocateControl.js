@@ -1,10 +1,11 @@
+
 import L from "leaflet";
-import "leaflet.locatecontrol";
 import { useMap } from "react-leaflet";
 import { useEffect } from "react";
+import "leaflet.locatecontrol";
 import locateIcon from "../../../public/locate.png";
 
-function LocateControl() {
+function LocateControl({ onLocationFound }) {
   const map = useMap();
 
   useEffect(() => {
@@ -22,9 +23,21 @@ function LocateControl() {
       icon: locateIcon,
     });
 
-    map.addControl(lc);
-    return () => map.removeControl(lc);
-  }, [map]);
+    lc.addTo(map);
+
+    const handleLocationFound = (e) => {
+      if (onLocationFound) {
+        onLocationFound([e.latlng.lat, e.latlng.lng]);
+      }
+    };
+
+    map.on('locationfound', handleLocationFound);
+
+    return () => {
+      map.off('locationfound', handleLocationFound);
+      map.removeControl(lc);
+    };
+  }, [map, onLocationFound]);
 
   return null;
 }
