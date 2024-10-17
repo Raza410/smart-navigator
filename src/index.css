@@ -63,6 +63,22 @@
   background-color: #f0f0f0 !important;
 }
 
+
+.leaflet-control-locate a {
+  /* background: linear-gradient(to bottom, #0b9cec, #274a9b) !important; */
+  background-image: url('/locate.png'), linear-gradient(to bottom, #0b9cec, #274a9b) !important; /* Stack the icon and gradient */
+  background-size: 50% 50%, 100% 100%; /* Adjust icon size and gradient to fill the button */
+  background-position: center, center; /* Center the icon and gradient */
+  background-repeat: no-repeat, no-repeat; /* Prevent both from repeating */
+  width: 35px !important;
+  height: 35px !important;
+  border: none !important;
+  border-radius: 50% !important;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+
+
 /* .flag-dropdown {
   background-color: #f8f9fa !important;
   border: none !important;
