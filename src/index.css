@@ -1,6 +1,8 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 /* 👇 Make sure the styles are applied in the correct order */
 @layer mantine, mantine-datatable;
 
@@ -13,6 +15,7 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #f9f9f9;
+npm install react-responsive-carousel
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

@@ -64,15 +64,15 @@ export default function GeoSearch() {
                         setIsSearchManuallyUpdated(true); // Marking the search as manually updated
                     }}
                 />
-                <FaSearch className="absolute left-3 md:ml-5 top-1/2 transform -translate-y-1/2 text-gray-200 w-4 h-4" />
+                <FaSearch className="absolute w-4 h-4 text-gray-200 transform -translate-y-1/2 left-3 md:ml-5 top-1/2" />
                 {searchTerm && (
                     <FaTimes
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-200 w-3 h-3 cursor-pointer"
+                        className="absolute w-3 h-3 text-gray-200 transform -translate-y-1/2 cursor-pointer right-3 top-1/2"
                         onClick={handleClearSearch}
                     />
                 )}
                 {uniqueSearchResults.length > 0 && (
-                    <div className="absolute top-full left-0 z-10 w-full bg-white border border-gray-300 rounded mt-1 shadow-lg">
+                    <div className="absolute left-0 z-10 w-full mt-1 bg-white border border-gray-300 rounded shadow-lg top-full">
                         {uniqueSearchResults.map(result => (
                             <div key={result.gid} className="p-2 cursor-pointer hover:bg-gray-100" onClick={() => handleResultClick(result)}>
                                 {searchTerm.toLowerCase().includes('facu') ? result.building_name : result.departments}

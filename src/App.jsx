@@ -4,13 +4,13 @@ function App() {
 
   return (
     <>
-      {/* <MantineProvider > */}
+      <MantineProvider >
 
       <div className="flex flex-col bg-[#f3f4f6] h-[100vh]">
         <AppRoutes />
       </div>
 
-      {/* </MantineProvider>   */}
+      </MantineProvider>  
     </>
   )
 }

@@ -17,7 +17,7 @@ import Control from "react-leaflet-custom-control"
 import "leaflet-draw/dist/leaflet.draw.css"
 import DrawTool from "../components/mapComponent/DrawTool"
 import Navbar from "../components/Navbar"
-import Sidebar from "../components/mapComponent/SideBar"
+import Sidebar from '../components/mapComponent/SideBar'
 import L from "leaflet"
 import "leaflet-polylinedecorator"
 import LocateControl from "../components/mapComponent/LocateControl"
@@ -61,7 +61,7 @@ function Map({ children, style, datasets, mapprops }) {
   useEffect(() => {
     const fetchRoadData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/getroads")
+        const response = await fetch("http://localhost:3002/getroads")
         const data = await response.json()
         setRoadData(data)
         console.log("roads", data)
@@ -75,7 +75,7 @@ function Map({ children, style, datasets, mapprops }) {
   useEffect(() => {
     const fetchBuildingData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/getbuildings")
+        const response = await fetch("http://localhost:3002/getbuildings")
         const data = await response.json()
         console.log("Building", data)
         setBuildingData(data)
