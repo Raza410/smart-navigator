@@ -6,13 +6,10 @@ import { MapStyleButton } from "./MapStyleButton";
 
 const MapStyle = ({ onStyleChange }) => {
   const initialStyle = {
-    title: "World Imagery",
-    img: `/mapImages/WorldImageMap.png`,
+    title: "Open Street Map",
+    img: `/mapImages/OSMImage.png`,
     method: () =>
-      onStyleChange(
-        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-      ),
-    // method: () => onStyleChange("https://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}")
+      onStyleChange("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"),
   };
 
   const [selectedStyle, setSelectedStyle] = useState(initialStyle);
@@ -21,7 +18,14 @@ const MapStyle = ({ onStyleChange }) => {
 
   const mapStyles = [
     initialStyle,
-    // { title: "World Imagery", img: `/mapImages/WorldImageMap.png`, method: () => onStyleChange("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}") },
+    {
+      title: "World Imagery",
+      img: `/mapImages/WorldImageMap.png`,
+      method: () =>
+        onStyleChange(
+          "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+        ),
+    },
     {
       title: "Positron",
       img: `/mapImages/Positron.png`,
@@ -30,42 +34,42 @@ const MapStyle = ({ onStyleChange }) => {
           "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
         ),
     },
-    {
-      title: "Dark Matter",
-      img: `/mapImages/DarkMatter.png`,
-      method: () =>
-        onStyleChange(
-          "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
-        ),
-    },
-    {
-      title: "Open Street Map",
-      img: `/mapImages/OSMImage.png`,
-      method: () =>
-        onStyleChange("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"),
-    },
-    {
-      title: "Open Topo Map",
-      img: `/mapImages/Topographic.png`,
-      method: () =>
-        onStyleChange("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"),
-    },
-    {
-      title: "NatGeo World Map",
-      img: `/mapImages/NatGeo.png`,
-      method: () =>
-        onStyleChange(
-          "https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"
-        ),
-    },
-    {
-      title: "CartoDB Voyager",
-      img: `/mapImages/CartoDB.png`,
-      method: () =>
-        onStyleChange(
-          "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png"
-        ),
-    },
+    // {
+    //   title: "Dark Matter",
+    //   img: `/mapImages/DarkMatter.png`,
+    //   method: () =>
+    //     onStyleChange(
+    //       "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
+    //     ),
+    // },
+    // {
+    //   title: "Open Street Map",
+    //   img: `/mapImages/OSMImage.png`,
+    //   method: () =>
+    //     onStyleChange("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"),
+    // },
+    // {
+    //   title: "Open Topo Map",
+    //   img: `/mapImages/Topographic.png`,
+    //   method: () =>
+    //     onStyleChange("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"),
+    // },
+    // {
+    //   title: "NatGeo World Map",
+    //   img: `/mapImages/NatGeo.png`,
+    //   method: () =>
+    //     onStyleChange(
+    //       "https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"
+    //     ),
+    // },
+    // {
+    //   title: "CartoDB Voyager",
+    //   img: `/mapImages/CartoDB.png`,
+    //   method: () =>
+    //     onStyleChange(
+    //       "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png"
+    //     ),
+    // },
     // {
     //   title: "ESRI World Street Map",
     //   img: `/mapImages/ESRI.png`,

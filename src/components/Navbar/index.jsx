@@ -61,7 +61,7 @@ export default () => {
             <img
               src={CUILogo}
               alt="University Logo"
-              className="h-auto md:w-20 md:h-auto px-1"
+              className="h-auto px-1 md:w-20 md:h-auto"
             />          </div>
           {/* <Link to="/">
             <h1 className="text-white text-2xl font-black italic mx-2.5">
@@ -71,7 +71,7 @@ export default () => {
           <div className="flex items-center space-x-1.5 gap-8">
             <NavItemsOrSearchBar />
           </div>
-          <div className="ml-auto flex mr-2 items-center">
+          <div className="flex items-center ml-auto mr-2">
             {/* <UploadProgress /> */}
             {/* <LoginButton /> */}
           </div>
@@ -99,7 +99,7 @@ const NavItemsOrSearchBar = () => {
   }, [pathname]);
 
   return (
-    <div className='flex-1 flex relative'>
+    <div className='relative flex flex-1'>
       <Transition
         mounted={showGeoSearch}
         transition="scale"

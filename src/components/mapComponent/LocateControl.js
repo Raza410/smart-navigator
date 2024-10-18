@@ -1,9 +1,8 @@
-
 import L from "leaflet";
 import { useMap } from "react-leaflet";
 import { useEffect } from "react";
 import "leaflet.locatecontrol";
-import locateIcon from "../../../public/locate.png";
+// import locateIcon from "/locate.png";
 
 function LocateControl({ onLocationFound }) {
   const map = useMap();
@@ -20,7 +19,7 @@ function LocateControl({ onLocationFound }) {
       flyTo: true,
       drawCircle: true,
       showCompass: true,
-      icon: locateIcon,
+      // icon: locateIcon,
     });
 
     lc.addTo(map);
@@ -31,10 +30,10 @@ function LocateControl({ onLocationFound }) {
       }
     };
 
-    map.on('locationfound', handleLocationFound);
+    map.on("locationfound", handleLocationFound);
 
     return () => {
-      map.off('locationfound', handleLocationFound);
+      map.off("locationfound", handleLocationFound);
       map.removeControl(lc);
     };
   }, [map, onLocationFound]);
