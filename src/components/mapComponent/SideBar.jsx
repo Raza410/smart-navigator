@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Slider from "react-slick";
@@ -113,19 +114,13 @@ export default function Sidebar({ selectedBuilding, onClose }) {
 
   return (
     <div
-    className="absolute right-0 z-50 w-11/12 min-h-screen mr-6 overflow-y-auto bg-white rounded-md shadow-lg mt-80 md:mt-24 top-16 md:inset-y-0 md:max-w-96"
+  className="fixed z-50 w-11/12 max-h-screen min-h-screen mb-64 overflow-y-auto bg-white rounded-md shadow-lg left-6 mt-80 md:mt-24 top-16 md:inset-y-0 md:max-w-96"
 
 
-      style={{
-        height: window.innerWidth >= 768 ? "100vh" : `${sidebarHeight}px`,
-      }}
       ref={sidebarRef}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
-      <div className="flex items-center justify-center w-full py-2 cursor-pointer">
-        <div className="w-12 h-1 bg-gray-400 rounded-full"></div>
-      </div>
       <div className="p-6">
         <div className="flex justify-end">
           <button
@@ -148,8 +143,8 @@ export default function Sidebar({ selectedBuilding, onClose }) {
         <img
           src={imagePaths[0]} 
           alt={`Single image for ${selectedBuilding.building_name || selectedBuilding.name}`}
-          className="object-contain w-full h-full rounded-lg" 
-          style={{ maxHeight: '250px' }} 
+          className="w-full h-full bg-cover rounded-lg " 
+          style={{ minHeight: '250px' }} 
         />
       ) : (
         <Slider {...settings}>
@@ -158,7 +153,7 @@ export default function Sidebar({ selectedBuilding, onClose }) {
               <img
                 src={imagePath} 
                 alt={`Slide ${index}`}
-                className="object-contain w-full h-full rounded-lg" 
+                className="w-full h-full bg-cover rounded-lg" 
                 style={{ minHeight: '250px' }} 
               />
             </div>

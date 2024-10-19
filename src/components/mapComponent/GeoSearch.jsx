@@ -81,10 +81,21 @@ export default function GeoSearch() {
                     </div>
                 )}
             </div>
-
+            <div>
             {selectedBuilding && (
-                <Sidebar selectedBuilding={selectedBuilding} onClose={() => setSelectedBuilding(null)} />
-            )}
+  <Sidebar
+    selectedBuilding={selectedBuilding}
+    onClose={() => setSelectedBuilding(null)}
+    style={{
+      backgroundColor: 'blue',
+      padding: '20px',
+      borderRadius: '8px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    }}
+  />
+  
+)}
+</div>
         </>
     );
 }

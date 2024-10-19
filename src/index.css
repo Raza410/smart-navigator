@@ -114,7 +114,8 @@ npm install react-responsive-carousel
 
 .leaflet-popup-content-wrapper{
   /* background-color: #e9eaea !important; */
-  padding: -10px !important;
+  padding: -14px !important;
+  border-radius: 5px !important;
 }
 /* .flag-dropdown {
   background-color: #f8f9fa !important;
@@ -365,6 +366,7 @@ npm install react-responsive-carousel
   top: 0px !important;
   left: 5px !important;
   cursor: pointer;
+  background-color: #0b9cec;
 }
 
 .leaflet-measure-lable .close .icon {
@@ -460,7 +462,7 @@ npm install react-responsive-carousel
 
   .leaflet-control-zoom {
     position: absolute !important;
-    left: -16px;
+    left: -2px;
     top: 10px;
   }
 }
@@ -506,7 +508,9 @@ npm install react-responsive-carousel
   }
 }
 
-
+.leaflet-popup-content{
+  margin: 16px !important;
+}
 /* Add this to your global CSS or Tailwind config */
 @keyframes slideUp {
   from {
@@ -522,4 +526,7 @@ npm install react-responsive-carousel
 
 .sidebar {
   animation: slideUp 0.3s ease-out;
+}
+leaflet-bar{
+  display: inline-block;
 }

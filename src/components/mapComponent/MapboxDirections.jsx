@@ -6,38 +6,38 @@ const MAPBOX_ACCESS_TOKEN =
 
 export default function MapboxDirections(props) {
   const { userLocation, searchLocation } = props;
-  const [route, setRoute] = useState(null);
+  const [firstRoute, setFirstRoute] = useState([]); // Store first route
+  const [secondRoute, setSecondRoute] = useState([]); // Store second route
   const map = useMap();
 
   useEffect(() => {
     if (userLocation && searchLocation) {
-      console.log(searchLocation, "search location");
-      fetchRoute(userLocation, [33.649123153769345, 73.15557718276979]);
-      fetchRoute(userLocation, [33.649123153769345, 73.15557718276979]);
+      // Check if searchLocation contains multiple sets of coordinates
+      const coordinates = Array.isArray(searchLocation[0]) ? searchLocation : [searchLocation];
+
+      if (coordinates[0]) {
+        console.log("Fetching route for Set 1:", coordinates[0]);
+        fetchRoute(userLocation, coordinates[0], setFirstRoute);
+      }
+      if (coordinates[1]) {
+        console.log("Fetching route for Set 2:", coordinates[1]);
+        fetchRoute(userLocation, coordinates[1], setSecondRoute);
+      }
     }
   }, [userLocation, searchLocation]);
 
-  useEffect(() => {
-    if (route) {
-      const bounds = route.map(([lat, lng]) => [lat, lng]);
-      map.fitBounds(bounds, { padding: [50, 50] }); 
-    }
-  }, [route, map]);
-
-  const fetchRoute = async (start, end) => {
+  const fetchRoute = async (start, end, setRoute) => {
     const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${start[1]},${start[0]};${end[1]},${end[0]}?alternatives=true&geometries=geojson&language=en&overview=full&steps=true&access_token=${MAPBOX_ACCESS_TOKEN}`;
 
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data, "data")
+      console.log(data, "data");
       if (data.routes && data.routes.length > 0) {
-        setRoute(
-          data.routes[0].geometry.coordinates.map((coord) => [
-            coord[1],
-            coord[0],
-          ])
-        );
+        setRoute(data.routes[0].geometry.coordinates.map((coord) => [
+          coord[1],
+          coord[0],
+        ]));
       }
     } catch (error) {
       console.error("Error fetching route:", error);
@@ -47,11 +47,26 @@ export default function MapboxDirections(props) {
   return (
     <>
       {userLocation && <Marker position={userLocation} />}
-      {searchLocation && <Marker position={searchLocation} />}
-      {route && (
+      {searchLocation && Array.isArray(searchLocation[0]) && searchLocation.map((location, index) => (
+        <Marker key={index} position={location} />
+      ))}
+      {firstRoute.length > 0 && (
         <Polyline
-          positions={route}
-          color="blue" // Line color
+          positions={firstRoute}
+          color="blue" // Color for the first route
+          weight={5} // Line thickness
+          opacity={0.8} // Line transparency
+          dashArray="5,10" // Dashed line pattern
+          lineCap="round" // Rounded endpoints
+          lineJoin="round" // Rounded corners
+          dashOffset="0" // Starting point of the dashed pattern
+          smoothFactor={1} // Smoothness of the polyline
+        />
+      )}
+      {secondRoute.length > 0 && (
+        <Polyline
+          positions={secondRoute}
+          color="red" // Color for the second route
           weight={5} // Line thickness
           opacity={0.8} // Line transparency
           dashArray="5,10" // Dashed line pattern
