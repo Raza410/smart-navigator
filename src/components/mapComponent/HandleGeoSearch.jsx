@@ -13,28 +13,27 @@ export default function HandleGeoSearch({ onLocationSelected }) {
       selectedLocation.cui_building &&
       selectedLocation.cui_building.geom
     ) {
-      
       const allCoordinates = selectedLocation.cui_building.geom.coordinates;
 
-      
       console.log('All coordinates:', allCoordinates);
 
-      
-      const coordinates = allCoordinates.flatMap(polygon => 
+      // Flattening coordinates for easy handling
+      const coordinates = allCoordinates.flatMap(polygon =>
         polygon[0].map((coord) => [coord[1], coord[0]])
       );
 
+      // Log number of coordinate sets
       console.log(`Number of coordinate sets: ${coordinates.length}`);
       coordinates.forEach((coord, index) => {
         console.log(`Set ${index + 1}:`, coord);
       });
 
-  
+      // Setting marker position to the first coordinate
       const firstCoordinate = coordinates[0];
       setMarkerPosition(firstCoordinate);
       onLocationSelected(firstCoordinate); 
 
-      
+      // Fly the map to the first coordinate
       map.flyTo(firstCoordinate, map.getZoom()); 
     }
   }, [selectedLocation, map, onLocationSelected]);

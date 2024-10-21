@@ -1,51 +1,63 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+// Mapping of building names to their respective folder names
 const folderNames = {
   "Academic block 1": "Academic_block_1",
-  "Acadamic block 2": "Academic_block_2",
-  "Acadamic Block 3": "Academic_block_3",
-  "Library": "library",
-  "Medical Center": "Medical Center",
-  "Student Services Center": "Student service center",
-  "Mosque": "Mosque",
-  "R&D Lab": "R&D Lab",
-  "N Block": "N Block",
+  "Acadamic block 2": "Acadamic block 2",
+  "Acadamic Block 3": "Acadamic Block 3",
   "Library": "Library",
+  "Medical Center": "Medical_Center",
+  "Student Services Center": "Student_service_center",
+  "Mosque": "Mosque",
+  "R & D LaB": "R & D LaB",
+  "N Block": "N Block",
   "Canteen": "canteen",
   "Faculity block 1": "Faculity block 1",
-  "faculity block 2": "faculty block 2",
+  "faculity block 2": "faculity block 2",
   "Physics Block": "Physics Block",
   "Store": "Store",
   "SSBC": "SSBC",
-  "Staff Canteen": "satff canteen",
+  "Staff Canteen": "Staff Canteen",
   "Students Canteen": "Students_Canteen",
-  "SportsComplex": "sports complex",
+  "SportsComplex": "sports_complex",
   "Arts Building": "arts_building",
   "Sports Complex": "sports_complex",
 };
 
+// Function to load images based on building name
 const loadImages = (buildingName) => {
   const imagePaths = [];
-  const folderName = folderNames[buildingName];
-  const imageNames = [
-    "image1.jpg",
-    "image2.jpg",
-    "image3.jpg",
-    "image4.jpg",
-  ]; 
+  const normalizedBuildingName = buildingName.trim(); // Remove whitespace
+  const folderName = folderNames[normalizedBuildingName];
 
+  console.log("folder name", folderName);
+  const imageNames = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg"];
+
+  if (!folderName) {
+    console.warn(`No folder found for building: ${buildingName}`);
+    console.log(`Folder Path: /images/${buildingName}/`); // Log folder path even if not found
+    return imagePaths; // Return empty array if no folder found
+  }
+
+  // Log the found folder path
+  console.log(`Folder found for building: ${buildingName}. Folder Path: /images/${folderName}/`);
+
+  // Construct the image path and push into array
   imageNames.forEach((imageName) => {
     const imagePath = `/images/${folderName}/${imageName}`;
+    console.log("Image Path:", imagePath); // Log the image path for debugging
     imagePaths.push(imagePath);
   });
 
+  console.log(`Images loaded for ${buildingName}:`, imagePaths);
   return imagePaths;
+
 };
+
 
 export default function Sidebar({ selectedBuilding, onClose }) {
   const [imagePaths, setImagePaths] = useState([]);
@@ -57,22 +69,25 @@ export default function Sidebar({ selectedBuilding, onClose }) {
     if (selectedBuilding.building_name || selectedBuilding.name) {
       const buildingName = selectedBuilding.building_name || selectedBuilding.name;
       console.log("Selected building:", buildingName);
-      fetchImagesForBuilding(buildingName);
-      fetchDepartments(buildingName); 
+      fetchImagesForBuilding(buildingName); // Fetch images
+      fetchDepartments(buildingName); // Fetch departments
     }
   }, [selectedBuilding]);
+  
 
+  // Fetch images based on the building name
   const fetchImagesForBuilding = (buildingName) => {
     try {
       console.log(`Fetching images for building: ${buildingName}`);
-      const images = loadImages(buildingName); 
-      setImagePaths(images); 
+      const images = loadImages(buildingName);
+      setImagePaths(images);
     } catch (error) {
       console.error(`Error loading images for building "${buildingName}":`, error);
-      setImagePaths([]); 
+      setImagePaths([]); // Clear image paths if an error occurs
     }
   };
 
+  // Fetch departments based on the building name
   const fetchDepartments = async (buildingName) => {
     try {
       console.log(`Fetching departments for building: ${buildingName}`);
@@ -87,11 +102,13 @@ export default function Sidebar({ selectedBuilding, onClose }) {
     }
   };
 
+  // Handle touch start for mobile swipe to resize
   const handleTouchStart = (e) => {
     sidebarRef.current.startY = e.touches[0].clientY;
     sidebarRef.current.startHeight = sidebarHeight;
   };
 
+  // Handle touch move to resize the sidebar height on mobile
   const handleTouchMove = (e) => {
     const touchY = e.touches[0].clientY;
     const heightDifference = sidebarRef.current.startY - touchY;
@@ -102,21 +119,23 @@ export default function Sidebar({ selectedBuilding, onClose }) {
     setSidebarHeight(newHeight);
   };
 
+  // Settings for image slider (slick-carousel)
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: imagePaths.length > 1, // Infinite loop if more than 1 image
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true, 
-    autoplaySpeed: 2000, 
+    autoplay: imagePaths.length > 1, // Autoplay only if multiple images
+    autoplaySpeed: 2000,
   };
+
+  // Filter out valid departments to display
+  const validDepartments = departments.filter(department => department.departments);
 
   return (
     <div
-  className="fixed z-50 w-11/12 max-h-screen min-h-screen mb-64 overflow-y-auto bg-white rounded-md shadow-lg left-6 mt-80 md:mt-24 top-16 md:inset-y-0 md:max-w-96"
-
-
+      className="fixed z-50 w-11/12 min-h-screen mb-64 bg-white rounded-md shadow-lg lg:max-h-screen md:overflow-y-auto left-6 mt-80 md:mt-24 top-16 md:inset-y-0 md:max-w-96"
       ref={sidebarRef}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -135,42 +154,42 @@ export default function Sidebar({ selectedBuilding, onClose }) {
             {selectedBuilding.building_name || selectedBuilding.name}
           </h2>
           <div className="mb-3 overflow-hidden rounded-lg" style={{ height: '250px' }}>
-  {imagePaths.length === 0 ? (
-    <p>No images available for this building.</p>
-  ) : (
-    <>
-      {imagePaths.length === 1 ? (
-        <img
-          src={imagePaths[0]} 
-          alt={`Single image for ${selectedBuilding.building_name || selectedBuilding.name}`}
-          className="w-full h-full bg-cover rounded-lg " 
-          style={{ minHeight: '250px' }} 
-        />
-      ) : (
-        <Slider {...settings}>
-          {imagePaths.map((imagePath, index) => (
-            <div key={index} className="image-slide">
-              <img
-                src={imagePath} 
-                alt={`Slide ${index}`}
-                className="w-full h-full bg-cover rounded-lg" 
-                style={{ minHeight: '250px' }} 
-              />
-            </div>
-          ))}
-        </Slider>
-      )}
-    </>
-  )}
-</div>
+            {imagePaths.length === 0 ? (
+              <p>No images available for this building.</p>
+            ) : (
+              <>
+                {imagePaths.length === 1 ? (
+                  <img
+                    src={imagePaths[0]} 
+                    alt={`Single image for ${selectedBuilding.building_name || selectedBuilding.name}`}
+                    className="w-full h-full bg-cover rounded-lg" 
+                    style={{ minHeight: '250px' }} 
+                  />
+                ) : (
+                  <Slider {...settings}>
+                    {imagePaths.map((imagePath, index) => (
+                      <div key={index} className="image-slide">
+                        <img
+                          src={imagePath} 
+                          alt={`Slide ${index}`}
+                          className="w-full h-full bg-cover rounded-lg" 
+                          style={{ minHeight: '250px' }} 
+                        />
+                      </div>
+                    ))}
+                  </Slider>
+                )}
+              </>
+            )}
+          </div>
 
-          {departments.length > 0 && (
+          {validDepartments.length > 0 && (
             <div className="p-4 mt-2 rounded-lg shadow-lg">
               <h3 className="mt-4 mb-2 text-xl font-semibold text-gray-600">
                 Departments in this Building
               </h3>
               <div>
-                {departments.map((department) => (
+                {validDepartments.map((department) => (
                   <p
                     key={department.id}
                     className="p-2 mb-2 text-gray-600 border border-gray-300 rounded bg-slate-50"

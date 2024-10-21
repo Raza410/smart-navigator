@@ -32,9 +32,11 @@ npm install react-responsive-carousel
   font-family: 'Times New Roman', Times, serif;
 }
 
-.leaflet-top.leaflet-right {
-  top: 100px !important;
-  right: 15px !important;
+
+.image-popup {
+  width: 260px;
+  height: 170px;
+  object-fit: cover;
 }
 
 .leaflet-touch .leaflet-bar {

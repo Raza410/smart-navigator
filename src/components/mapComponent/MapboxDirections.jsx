@@ -6,21 +6,18 @@ const MAPBOX_ACCESS_TOKEN =
 
 export default function MapboxDirections(props) {
   const { userLocation, searchLocation } = props;
-  const [firstRoute, setFirstRoute] = useState([]); // Store first route
-  const [secondRoute, setSecondRoute] = useState([]); // Store second route
+  const [firstRoute, setFirstRoute] = useState([]);
+  const [secondRoute, setSecondRoute] = useState([]);
   const map = useMap();
 
   useEffect(() => {
     if (userLocation && searchLocation) {
-      // Check if searchLocation contains multiple sets of coordinates
       const coordinates = Array.isArray(searchLocation[0]) ? searchLocation : [searchLocation];
 
       if (coordinates[0]) {
-        console.log("Fetching route for Set 1:", coordinates[0]);
         fetchRoute(userLocation, coordinates[0], setFirstRoute);
       }
       if (coordinates[1]) {
-        console.log("Fetching route for Set 2:", coordinates[1]);
         fetchRoute(userLocation, coordinates[1], setSecondRoute);
       }
     }
@@ -32,7 +29,7 @@ export default function MapboxDirections(props) {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data, "data");
+      console.log("data is",data); // Log the response data directly
       if (data.routes && data.routes.length > 0) {
         setRoute(data.routes[0].geometry.coordinates.map((coord) => [
           coord[1],
