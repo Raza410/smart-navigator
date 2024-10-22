@@ -18,6 +18,7 @@ export default function HandleGeoSearch({ onLocationSelected }) {
       // Parse entrances if it's a string
       let coordinatesArray;
       try {
+        // Code Updated
         // Remove any unwanted characters and parse the string to array
         const formattedString = entrances.replace(/[\{\}]/g, '').trim();
         coordinatesArray = formattedString.split('],[').map(item => {
