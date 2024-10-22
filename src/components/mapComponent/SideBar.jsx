@@ -154,6 +154,7 @@ export default function Sidebar({ selectedBuilding, onClose }) {
       ? {
           dots: false,
           slidesToShow: 1,
+          
           slidesToScroll: 1,
           arrows: true,
         }
