@@ -139,7 +139,7 @@ const settings = imagePaths.length > 1 ? {
   autoplay: false,  // Disable autoplay if only 1 image
   arrows: false,  // Disable arrows if only 1 image
 };
-
+    
 
 
   // Filter out valid departments to display
