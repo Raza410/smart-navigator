@@ -16,10 +16,28 @@ export default function HandleGeoSearch({ onLocationSelected }) {
       const allCoordinates = selectedLocation.cui_building.enterances; // This should be your coordinate structure
       console.log("All coordinates:", allCoordinates);
 
+<<<<<<< HEAD
       // Check if allCoordinates is an array with at least one coordinate pair
       if (Array.isArray(allCoordinates) && allCoordinates.length > 0) {
         // Get the first coordinate pair (assumed to be [latitude, longitude])
         const firstCoordinatePair = allCoordinates[0];
+=======
+      // Parse entrances if it's a string
+      let coordinatesArray;
+      try {
+        // Code Updated
+        // Remove any unwanted characters and parse the string to array
+        const formattedString = entrances.replace(/[\{\}]/g, '').trim();
+        coordinatesArray = formattedString.split('],[').map(item => {
+          const coords = item.replace(/\[|\]/g, '').split(',').map(Number);
+          console.log(coords)
+          return coords; // Convert string coordinates to numbers
+        });
+      } catch (error) {
+        console.error('Error parsing entrances:', error);
+        coordinatesArray = [];
+      }
+>>>>>>> bc12a9d1ac2760d290f1b76f4307fe98b686fe89
 
         // Check if the first coordinate pair is valid
         if (Array.isArray(firstCoordinatePair) && firstCoordinatePair.length >= 2) {
