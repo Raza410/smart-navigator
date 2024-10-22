@@ -203,7 +203,7 @@ function Map({ children, style }) {
             <HandleGeoSearch onLocationSelected={setSearchLocation} />
 
             {userLocation && <Marker position={userLocation} />}
-            {searchLocation && <Marker position={searchLocation} />}
+            {/* {searchLocation && <Marker position={searchLocation} />} */}
             {searchLocation && (
               Array.isArray(searchLocation[0]) ? (
                 // If searchLocation is an array of arrays
