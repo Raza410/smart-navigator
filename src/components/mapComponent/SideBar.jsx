@@ -33,26 +33,21 @@ const loadImages = (buildingName) => {
   const normalizedBuildingName = buildingName.trim(); // Remove whitespace
   const folderName = folderNames[normalizedBuildingName];
 
-  console.log("folder name", folderName);
   const imageNames = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg"];
 
   if (!folderName) {
     console.warn(`No folder found for building: ${buildingName}`);
-    console.log(`Folder Path: /images/${buildingName}/`); // Log folder path even if not found
     return imagePaths; // Return empty array if no folder found
   }
 
   // Log the found folder path
-  console.log(`Folder found for building: ${buildingName}. Folder Path: /images/${folderName}/`);
 
   // Construct the image path and push into array
   imageNames.forEach((imageName) => {
     const imagePath = `/images/${folderName}/${imageName}`;
-    console.log("Image Path:", imagePath); // Log the image path for debugging
     imagePaths.push(imagePath);
   });
 
-  console.log(`Images loaded for ${buildingName}:`, imagePaths);
   return imagePaths;
 
 };
@@ -67,17 +62,15 @@ export default function Sidebar({ selectedBuilding, onClose }) {
   useEffect(() => {
     if (selectedBuilding.building_name || selectedBuilding.name) {
       const buildingName = selectedBuilding.building_name || selectedBuilding.name;
-      console.log("Selected building:", buildingName);
       fetchImagesForBuilding(buildingName); // Fetch images
       fetchDepartments(buildingName); // Fetch departments
     }
   }, [selectedBuilding]);
-  
+
 
   // Fetch images based on the building name
   const fetchImagesForBuilding = (buildingName) => {
     try {
-      console.log(`Fetching images for building: ${buildingName}`);
       const images = loadImages(buildingName);
       setImagePaths(images);
     } catch (error) {
@@ -89,7 +82,6 @@ export default function Sidebar({ selectedBuilding, onClose }) {
   // Fetch departments based on the building name
   const fetchDepartments = async (buildingName) => {
     try {
-      console.log(`Fetching departments for building: ${buildingName}`);
       const response = await fetch(
         `http://localhost:3001/departments?buildingName=${buildingName}`
       );
@@ -171,34 +163,27 @@ const settings = imagePaths.length > 1 ? {
               <p>No images available for this building.</p>
             ) : (
               <>
-             {imagePaths.length === 0 ? (
-  // No images case
-  <p>No images available for this building.</p>
-) : imagePaths.length === 1 ? (
-  // Single image case: Directly render the image without Slider
-  <img
-    src={imagePaths[0]}
-    alt={`Single image for ${selectedBuilding.building_name || selectedBuilding.name}`}
-    className="w-full h-full bg-cover rounded-lg"
-    style={{ minHeight: '250px' }}
-  />
-) : (
-  // Multiple images case: Use Slider
-  <Slider {...settings}>
-    {imagePaths.map((imagePath, index) => (
-      <div key={index} className="image-slide">
-        <img
-          src={imagePath}
-          alt={`Slide ${index}`}
-          className="w-full h-full bg-cover rounded-lg"
-          style={{ minHeight: '250px' }}
-        />
-      </div>
-    ))}
-  </Slider>
-)}
-
-
+                {imagePaths.length === 1 ? (
+                  <img
+                    src={imagePaths[0]}
+                    alt={`Single image for ${selectedBuilding.building_name || selectedBuilding.name}`}
+                    className="w-full h-full bg-cover rounded-lg"
+                    style={{ minHeight: '250px' }}
+                  />
+                ) : (
+                  <Slider {...settings}>
+                    {imagePaths.map((imagePath, index) => (
+                      <div key={index} className="image-slide">
+                        <img
+                          src={imagePath}
+                          alt={`Slide ${index}`}
+                          className="w-full h-full bg-cover rounded-lg"
+                          style={{ minHeight: '250px' }}
+                        />
+                      </div>
+                    ))}
+                  </Slider>
+                )}
               </>
             )}
           </div>

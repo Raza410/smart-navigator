@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function HandleGeoSearch({ onLocationSelected }) {
   const selectedLocation = useSelectedGeosearch();
   const map = useMap();
-  const [markerPosition, setMarkerPosition] = useState(null);
+  const [markerPositions, setMarkerPositions] = useState([]);
 
   useEffect(() => {
     if (
@@ -13,38 +13,45 @@ export default function HandleGeoSearch({ onLocationSelected }) {
       selectedLocation.cui_building &&
       selectedLocation.cui_building.enterances
     ) {
-      const allCoordinates = selectedLocation.cui_building.enterances; // Ensure this matches your structure
-      console.log("All coordinates:", allCoordinates);
-      const parsedCoordinates = JSON.parse(
-        allCoordinates.replace(/\n/g, "").replace(/}/g, "},").slice(0, -1) + "]"
-      ); 
-      console.log(parsedCoordinates, "parsedCoordinates");
+      const entrances = selectedLocation.cui_building.enterances;
 
+      // Parse entrances if it's a string
+      let coordinatesArray;
       try {
-        if (Array.isArray(parsedCoordinates) && parsedCoordinates.length > 0) {
-          parsedCoordinates.forEach((coordinatePair) => {
-            if (Array.isArray(coordinatePair) && coordinatePair.length >= 2) {
-              const position = [coordinatePair[0], coordinatePair[1]]; // [latitude, longitude]
-              console.log("Marker position:", position);
-              setMarkerPosition(position); // Example function call
-              onLocationSelected(position); // Call your location selection handler
-
-              // Fly the map to the position
-              map.flyTo(position, map.getZoom());
-            } else {
-              console.error("Invalid coordinate pair:", coordinatePair);
-            }
-          });
-        } else {
-          console.error("Invalid entrances structure:", parsedCoordinates);
-        }
+        // Remove any unwanted characters and parse the string to array
+        const formattedString = entrances.replace(/[\{\}]/g, '').trim();
+        coordinatesArray = formattedString.split('],[').map(item => {
+          const coords = item.replace(/\[|\]/g, '').split(',').map(Number);
+          console.log(coords)
+          return coords; // Convert string coordinates to numbers
+        });
       } catch (error) {
-        console.error("Error parsing entrances:", error);
+        console.error('Error parsing entrances:', error);
+        coordinatesArray = [];
       }
-    } else {
-      console.error("Invalid selectedLocation structure:", selectedLocation);
+
+      // Update marker positions
+      setMarkerPositions(coordinatesArray);
+      onLocationSelected(coordinatesArray); // Send all coordinates back to parent
+
+
+      // Validate the first entrance's coordinates and set the map view
+      const firstEntrance = coordinatesArray[0];
+      if (Array.isArray(firstEntrance) && firstEntrance.length === 2) {
+        const [lat, lng] = firstEntrance; // lat is the first value, lng is the second
+        if (lat !== null && lng !== null) {
+          map.setView([lat, lng], 18); // Adjust the zoom level as needed
+        }
+      }
+
     }
   }, [selectedLocation, map, onLocationSelected]);
 
-  return <>{markerPosition && <Marker position={markerPosition} />}</>;
+  return (
+    <>
+      {markerPositions.map((position, index) => (
+        <Marker key={index} position={[position[0], position[1]]} />
+      ))}
+    </>
+  );
 }
