@@ -5,53 +5,42 @@ import { useEffect, useState } from "react";
 export default function HandleGeoSearch({ onLocationSelected }) {
   const selectedLocation = useSelectedGeosearch();
   const map = useMap();
-  const [markerPositions, setMarkerPositions] = useState([]);
+  const [markerPosition, setMarkerPosition] = useState(null);
 
   useEffect(() => {
     if (
       selectedLocation &&
       selectedLocation.cui_building &&
-      selectedLocation.cui_building.enterances
+      selectedLocation.cui_building.enterances // Ensure this matches your structure
     ) {
-      const entrances = selectedLocation.cui_building.enterances;
+      const allCoordinates = selectedLocation.cui_building.enterances; // This should be your coordinate structure
+      console.log("All coordinates:", allCoordinates);
 
-      // Parse entrances if it's a string
-      let coordinatesArray;
-      try {
-        // Remove any unwanted characters and parse the string to array
-        const formattedString = entrances.replace(/[\{\}]/g, '').trim();
-        coordinatesArray = formattedString.split('],[').map(item => {
-          const coords = item.replace(/\[|\]/g, '').split(',').map(Number);
-          console.log(coords)
-          return coords; // Convert string coordinates to numbers
-        });
-      } catch (error) {
-        console.error('Error parsing entrances:', error);
-        coordinatesArray = [];
-      }
+      // Check if allCoordinates is an array with at least one coordinate pair
+      if (Array.isArray(allCoordinates) && allCoordinates.length > 0) {
+        // Get the first coordinate pair (assumed to be [latitude, longitude])
+        const firstCoordinatePair = allCoordinates[0];
 
-      // Update marker positions
-      setMarkerPositions(coordinatesArray);
-      onLocationSelected(coordinatesArray); // Send all coordinates back to parent
+        // Check if the first coordinate pair is valid
+        if (Array.isArray(firstCoordinatePair) && firstCoordinatePair.length >= 2) {
+          const position = [firstCoordinatePair[0], firstCoordinatePair[1]]; // [latitude, longitude]
+          console.log("Marker position:", position); // Log the position
 
+          setMarkerPosition(position);
+          onLocationSelected(position); 
 
-      // Validate the first entrance's coordinates and set the map view
-      const firstEntrance = coordinatesArray[0];
-      if (Array.isArray(firstEntrance) && firstEntrance.length === 2) {
-        const [lat, lng] = firstEntrance; // lat is the first value, lng is the second
-        if (lat !== null && lng !== null) {
-          map.setView([lat, lng], 18); // Adjust the zoom level as needed
+          // Fly the map to the position
+          map.flyTo(position, map.getZoom());
+        } else {
+          console.error("Invalid first coordinate pair:", firstCoordinatePair);
         }
+      } else {
+        console.error("Invalid entrances structure:", allCoordinates);
       }
-
+    } else {
+      console.error("Invalid selectedLocation structure:", selectedLocation);
     }
   }, [selectedLocation, map, onLocationSelected]);
 
-  return (
-    <>
-      {markerPositions.map((position, index) => (
-        <Marker key={index} position={[position[0], position[1]]} />
-      ))}
-    </>
-  );
+  return <>{markerPosition && <Marker position={markerPosition} />}</>;
 }
