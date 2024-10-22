@@ -37,7 +37,6 @@ function LoginButton() {
         (route) => route.to !== '/usermanagement'
       );
     }
-    console.log('userInfo : ', userInfo);
     return (
       <div className="flex items-center mr-2">
         {/* User's name and profile image */}

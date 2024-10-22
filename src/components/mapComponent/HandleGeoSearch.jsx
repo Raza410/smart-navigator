@@ -5,38 +5,53 @@ import { useEffect, useState } from "react";
 export default function HandleGeoSearch({ onLocationSelected }) {
   const selectedLocation = useSelectedGeosearch();
   const map = useMap();
-  const [markerPosition, setMarkerPosition] = useState(null);
+  const [markerPositions, setMarkerPositions] = useState([]);
 
   useEffect(() => {
     if (
       selectedLocation &&
       selectedLocation.cui_building &&
-      selectedLocation.cui_building.geom
+      selectedLocation.cui_building.enterances
     ) {
-      const allCoordinates = selectedLocation.cui_building.geom.coordinates;
+      const entrances = selectedLocation.cui_building.enterances;
 
-      console.log('All coordinates:', allCoordinates);
+      // Parse entrances if it's a string
+      let coordinatesArray;
+      try {
+        // Remove any unwanted characters and parse the string to array
+        const formattedString = entrances.replace(/[\{\}]/g, '').trim();
+        coordinatesArray = formattedString.split('],[').map(item => {
+          const coords = item.replace(/\[|\]/g, '').split(',').map(Number);
+          console.log(coords)
+          return coords; // Convert string coordinates to numbers
+        });
+      } catch (error) {
+        console.error('Error parsing entrances:', error);
+        coordinatesArray = [];
+      }
 
-      // Flattening coordinates for easy handling
-      const coordinates = allCoordinates.flatMap(polygon =>
-        polygon[0].map((coord) => [coord[1], coord[0]])
-      );
+      // Update marker positions
+      setMarkerPositions(coordinatesArray);
+      onLocationSelected(coordinatesArray); // Send all coordinates back to parent
 
-      // Log number of coordinate sets
-      console.log(`Number of coordinate sets: ${coordinates.length}`);
-      coordinates.forEach((coord, index) => {
-        console.log(`Set ${index + 1}:`, coord);
-      });
 
-      // Setting marker position to the first coordinate
-      const firstCoordinate = coordinates[0];
-      setMarkerPosition(firstCoordinate);
-      onLocationSelected(firstCoordinate); 
+      // Validate the first entrance's coordinates and set the map view
+      const firstEntrance = coordinatesArray[0];
+      if (Array.isArray(firstEntrance) && firstEntrance.length === 2) {
+        const [lat, lng] = firstEntrance; // lat is the first value, lng is the second
+        if (lat !== null && lng !== null) {
+          map.setView([lat, lng], 18); // Adjust the zoom level as needed
+        }
+      }
 
-      // Fly the map to the first coordinate
-      map.flyTo(firstCoordinate, map.getZoom()); 
     }
   }, [selectedLocation, map, onLocationSelected]);
 
-  return <>{markerPosition && <Marker position={markerPosition} />}</>;
+  return (
+    <>
+      {markerPositions.map((position, index) => (
+        <Marker key={index} position={[position[0], position[1]]} />
+      ))}
+    </>
+  );
 }

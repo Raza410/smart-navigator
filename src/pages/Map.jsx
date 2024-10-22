@@ -48,7 +48,7 @@ const loadBuildingImage = (buildingName) => {
   };
 
   const folderName = folderNames[buildingName];
-  const imageNames = ["image1.jpg", "image2.jpg", "image3.jpg" ,"image4.jpg"]; // Update this with actual image names
+  const imageNames = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg"]; // Update this with actual image names
   const imagePaths = imageNames.map((imageName) => `/images/${folderName}/${imageName}`);
 
   return imagePaths[0]; // Return the first image for the popup
@@ -93,8 +93,6 @@ function Map({ children, style }) {
 
         setRoadData(roadsData);
         setBuildingData(buildingsData);
-        console.log("Roads:", roadsData);
-        console.log("Buildings:", buildingsData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -107,7 +105,7 @@ function Map({ children, style }) {
     if (feature.properties && feature.properties.name) {
       const buildingName = feature.properties.name; // Get building name
       const imagePath = loadBuildingImage(buildingName); // Load the image based on the building name
-  
+
       const popupContent = `
   <div style="text-align: center;">
   <img 
@@ -126,9 +124,9 @@ function Map({ children, style }) {
   <span id="details-link" style="text-align: center; display: block; cursor:pointer; font-weight:bold"> See Details</span>
 `;
 
-  
+
       layer.bindPopup(popupContent); // Bind the popup content to the layer
-  
+
       // Handle popup open event
       layer.on("popupopen", (event) => {
         const detailsLink = document.getElementById("details-link");
@@ -139,7 +137,7 @@ function Map({ children, style }) {
           };
         }
       });
-  
+
       // Remove the click event handler that opens the sidebar
       // layer.on("click", (event) => {
       //   if (event.target._path !== null) { // Check if the clicked target is the layer
@@ -149,8 +147,8 @@ function Map({ children, style }) {
       // });
     }
   };
-  
-     
+
+
 
   return (
     <>
@@ -203,8 +201,20 @@ function Map({ children, style }) {
 
             <LocateControl onLocationFound={setUserLocation} />
             <HandleGeoSearch onLocationSelected={setSearchLocation} />
+
             {userLocation && <Marker position={userLocation} />}
-            {searchLocation && <Marker position={searchLocation} />}
+            {/* {searchLocation && <Marker position={searchLocation} />} */}
+            {searchLocation && (
+              Array.isArray(searchLocation[0]) ? (
+                // If searchLocation is an array of arrays
+                searchLocation.map((location, index) => (
+                  <Marker key={index} position={location} />
+                ))
+              ) : (
+                // If searchLocation is a single location
+                <Marker position={searchLocation} />
+              )
+            )}
             {userLocation && searchLocation && (
               <MapboxDirections
                 userLocation={userLocation}

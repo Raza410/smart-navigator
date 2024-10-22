@@ -31,7 +31,6 @@ export default function GeoSearch() {
   };
 
   const handleResultClick = (result) => {
-    console.log("Clicked Result: ", result);
     setSelectedBuilding(result); // Set the selected building to show in the sidebar
     setSelectedGeosearch(result);
     setSearchTerm(result.type);
