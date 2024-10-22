@@ -203,8 +203,8 @@ function Map({ children, style }) {
             <HandleGeoSearch onLocationSelected={setSearchLocation} />
 
             {userLocation && <Marker position={userLocation} />}
-            {searchLocation && <Marker position={searchLocation} />}
-            {searchLocation && (
+            {/* {searchLocation && <Marker position={searchLocation} />} */}
+            {/* {searchLocation && (
               Array.isArray(searchLocation[0]) ? (
                 // If searchLocation is an array of arrays
                 searchLocation.map((location, index) => (
@@ -214,7 +214,7 @@ function Map({ children, style }) {
                 // If searchLocation is a single location
                 <Marker position={searchLocation} />
               )
-            )}
+            )} */}
             {userLocation && searchLocation && (
               <MapboxDirections
                 userLocation={userLocation}

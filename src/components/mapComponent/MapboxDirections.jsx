@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMap, Polyline, Marker } from "react-leaflet";
 
-const MAPBOX_ACCESS_TOKEN =
-  "pk.eyJ1IjoiYWxpaGFpZGVyLTIyIiwiYSI6ImNtMTBqZ2I4NzBoYncybG9yMmQ0MjhpcW4ifQ.y9JQepAw0Fpoygv5W6QYWQ";
+const MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoiYWxpaGFpZGVyLTIyIiwiYSI6ImNtMTBqZ2I4NzBoYncybG9yMmQ0MjhpcW4ifQ.y9JQepAw0Fpoygv5W6QYWQ";
 
 export default function MapboxDirections(props) {
   const { userLocation, searchLocation } = props;
