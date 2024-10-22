@@ -65,7 +65,7 @@ export default function GeoSearch() {
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
-            setIsSearchManuallyUpdated(true); // Marking the search as manually updated
+            setIsSearchManuallyUpdated(true); 
           }}
         />
         <FaSearch className="absolute w-4 h-4 text-gray-200 transform -translate-y-1/2 left-3 md:ml-5 top-1/2" />

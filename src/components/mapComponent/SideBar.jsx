@@ -4,7 +4,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// Mapping of building names to their respective folder names
 const folderNames = {
   "Academic block 1": "Academic_block_1",
   "Acadamic block 2": "Acadamic block 2",
@@ -120,22 +119,36 @@ export default function Sidebar({ selectedBuilding, onClose }) {
   };
 
   // Settings for image slider (slick-carousel)
-  const settings = {
-    dots: false,
-    infinite: imagePaths.length > 1, // Infinite loop if more than 1 image
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: imagePaths.length > 1, // Autoplay only if multiple images
-    autoplaySpeed: 2000,
-  };
+  // Settings for image slider (slick-carousel)
+// Settings for image slider (slick-carousel)
+const settings = imagePaths.length > 1 ? {
+  dots: false,
+  infinite: true,  // Enable infinite loop only if more than 1 image
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,  
+  autoplay: true,  // Autoplay only if more than 1 image
+  autoplaySpeed: 2000,
+  arrows: true,  // Show arrows only if more than 1 image
+} : {
+  dots: false,
+  infinite: false,  // Disable infinite loop if only 1 image
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 0,
+  autoplay: false,  // Disable autoplay if only 1 image
+  arrows: false,  // Disable arrows if only 1 image
+};
+
+
 
   // Filter out valid departments to display
   const validDepartments = departments.filter(department => department.departments);
 
   return (
     <div
-      className="fixed z-50 w-11/12 min-h-screen mb-64 bg-white rounded-md shadow-lg lg:max-h-screen md:overflow-y-auto left-6 mt-80 md:mt-24 top-16 md:inset-y-0 md:max-w-96"
+    className="fixed z-50 w-9/12 md:max-h-[calc(100vh-80px)] overflow-y-auto bg-white rounded-md shadow-lg left-6 top-16 md:max-w-96 md:inset-y-0 md:mt-24 mb-2  mt-8 max-h-[calc(100vh-90px)]"
+
       ref={sidebarRef}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -149,7 +162,7 @@ export default function Sidebar({ selectedBuilding, onClose }) {
             <XMarkIcon className="w-6 h-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="mt-4">
+        <div className="mt--3">
           <h2 className="mb-4 text-2xl font-semibold text-gray-600">
             {selectedBuilding.building_name || selectedBuilding.name}
           </h2>
@@ -158,27 +171,34 @@ export default function Sidebar({ selectedBuilding, onClose }) {
               <p>No images available for this building.</p>
             ) : (
               <>
-                {imagePaths.length === 1 ? (
-                  <img
-                    src={imagePaths[0]} 
-                    alt={`Single image for ${selectedBuilding.building_name || selectedBuilding.name}`}
-                    className="w-full h-full bg-cover rounded-lg" 
-                    style={{ minHeight: '250px' }} 
-                  />
-                ) : (
-                  <Slider {...settings}>
-                    {imagePaths.map((imagePath, index) => (
-                      <div key={index} className="image-slide">
-                        <img
-                          src={imagePath} 
-                          alt={`Slide ${index}`}
-                          className="w-full h-full bg-cover rounded-lg" 
-                          style={{ minHeight: '250px' }} 
-                        />
-                      </div>
-                    ))}
-                  </Slider>
-                )}
+             {imagePaths.length === 0 ? (
+  // No images case
+  <p>No images available for this building.</p>
+) : imagePaths.length === 1 ? (
+  // Single image case: Directly render the image without Slider
+  <img
+    src={imagePaths[0]}
+    alt={`Single image for ${selectedBuilding.building_name || selectedBuilding.name}`}
+    className="w-full h-full bg-cover rounded-lg"
+    style={{ minHeight: '250px' }}
+  />
+) : (
+  // Multiple images case: Use Slider
+  <Slider {...settings}>
+    {imagePaths.map((imagePath, index) => (
+      <div key={index} className="image-slide">
+        <img
+          src={imagePath}
+          alt={`Slide ${index}`}
+          className="w-full h-full bg-cover rounded-lg"
+          style={{ minHeight: '250px' }}
+        />
+      </div>
+    ))}
+  </Slider>
+)}
+
+
               </>
             )}
           </div>
