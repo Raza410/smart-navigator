@@ -21,6 +21,7 @@ import L from "leaflet";
 import "leaflet-polylinedecorator";
 import LocateControl from "../components/mapComponent/LocateControl";
 import MapboxDirections from "../components/mapComponent/MapboxDirections";
+import axiosInstance from '../APIs/axiosInstance'; 
 
 // Function to load image paths based on the building name
 const loadBuildingImage = (buildingName) => {
@@ -84,15 +85,11 @@ function Map({ children, style }) {
     const fetchData = async () => {
       try {
         const [roadsResponse, buildingsResponse] = await Promise.all([
-          fetch("http://localhost:3001/getroads"),
-          fetch("http://localhost:3001/getbuildings"),
+          axiosInstance.get('/getroads'), 
+          axiosInstance.get('/getbuildings'),
         ]);
-
-        const roadsData = await roadsResponse.json();
-        const buildingsData = await buildingsResponse.json();
-
-        setRoadData(roadsData);
-        setBuildingData(buildingsData);
+        setRoadData(roadsResponse.data); 
+        setBuildingData(buildingsResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

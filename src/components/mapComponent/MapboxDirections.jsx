@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useMap, Polyline, Marker } from "react-leaflet";
-
-const MAPBOX_ACCESS_TOKEN =
-  "pk.eyJ1IjoiYWxpaGFpZGVyLTIyIiwiYSI6ImNtMTBqZ2I4NzBoYncybG9yMmQ0MjhpcW4ifQ.y9JQepAw0Fpoygv5W6QYWQ";
+import { fetchRoute } from '../../APIs/Api'; // Import the fetchRoute function
 
 export default function MapboxDirections(props) {
   const { userLocation, searchLocation } = props;
@@ -22,30 +20,28 @@ export default function MapboxDirections(props) {
 
       // Fetch route for each search location
       coordinates.forEach((location) => {
-        fetchRoute(userLocation, location);
+        getRoute(userLocation, location); // Use getRoute to fetch and update state
       });
     }
   }, [userLocation, searchLocation]);
 
-  const fetchRoute = async (start, end) => {
-    const url = `https://api.mapbox.com/directions/v5/mapbox/walking/${start[1]},${start[0]};${end[1]},${end[0]}?alternatives=true&geometries=geojson&language=en&overview=full&steps=true&access_token=${MAPBOX_ACCESS_TOKEN}`;
-
+  // Function to get the route and update the state
+  const getRoute = async (start, end) => {
     try {
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log("data is", data); // Log the response data directly
-      if (data.routes && data.routes.length > 0) {
-        // Add the fetched route as a new entry in the routes array
-        setRoutes((prevRoutes) => [
-          ...prevRoutes,
-          data.routes[0].geometry.coordinates.map((coord) => [
-            coord[1],
-            coord[0],
-          ]),
+      const routeData = await fetchRoute(start, end); // Call the API function
+      if (routeData.routes && routeData.routes.length > 0) {
+        // Process the route and update the state
+        const newRoute = routeData.routes[0].geometry.coordinates.map((coord) => [
+          coord[1], // Latitude
+          coord[0], // Longitude
         ]);
+        setRoutes((prevRoutes) => [...prevRoutes, newRoute]); // Add new route to the existing state
+        console.log("Route data received:", routeData);
+      } else {
+        console.log("No routes found for the specified locations.");
       }
     } catch (error) {
-      console.error("Error fetching route:", error);
+      console.error("Error getting route:", error);
     }
   };
 
@@ -54,7 +50,7 @@ export default function MapboxDirections(props) {
   return (
     <>
       {userLocation && <Marker position={userLocation} />}
-      {searchLocation && Array.isArray(searchLocation[0]) && searchLocation.map((location, index) => (
+      {searchLocation && Array.isArray(searchLocation) && searchLocation.map((location, index) => (
         <Marker key={index} position={location} />
       ))}
       {routes.map((route, index) => (

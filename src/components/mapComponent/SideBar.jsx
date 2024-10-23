@@ -3,6 +3,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import axiosInstance from '../../APIs/axiosInstance';
 
 const folderNames = {
   "Academic block 1": "Academic_block_1",
@@ -105,10 +106,10 @@ export default function Sidebar({ selectedBuilding, onClose }) {
 
   const fetchDepartments = async (buildingName) => {
     try {
-      const response = await fetch(
-        `http://localhost:3001/departments?buildingName=${buildingName}`
-      );
-      const data = await response.json();
+      const response = await axiosInstance.get(`/departments`, {
+        params: { buildingName },
+      });
+      const data = response.data;
       console.log("Departments fetched:", data);
       setDepartments(data);
     } catch (error) {
@@ -143,11 +144,10 @@ export default function Sidebar({ selectedBuilding, onClose }) {
 
   return (
     <div
-  className="fixed w-11/12 md:max-h-[calc(100vh-80px)] max-h-[50vh] overflow-y-auto bg-white rounded-md shadow-lg 
-    left-1/2 md:left-6 transform md:translate-x-0 -translate-x-1/2 md:top-1 top-72 md:max-w-96 md:inset-y-0 md:mt-24 mb-2 "
+  className="fixed w-11/12 md:max-h-[calc(100vh-80px)] max-h-[56vh] overflow-y-auto bg-white rounded-md shadow-lg 
+    left-1/2 md:left-6 transform md:translate-x-0 -translate-x-1/2 md:top-1 top-72 md:max-w-96 md:inset-y-0 md:mt-24 "
   ref={sidebarRef}
 >
-
 
       <div className="px-4 py-2">
         <div className="flex justify-end">

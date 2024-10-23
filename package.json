@@ -16,6 +16,7 @@
     "@mapbox/mapbox-gl-directions": "^4.3.1",
     "@preact/signals": "^1.2.1",
     "@preact/signals-core": "^1.5.0",
+    "axios": "^1.7.7",
     "leaflet": "^1.9.4",
     "leaflet-geosearch": "^3.10.2",
     "leaflet-polylinedecorator": "^1.6.0",
