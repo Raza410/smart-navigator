@@ -49,6 +49,8 @@ export default function MapboxDirections(props) {
     }
   };
 
+  const colors = ['#4B3D3A', '#2E8B57']; // Dark brown and dark seagreen colors
+
   return (
     <>
       {userLocation && <Marker position={userLocation} />}
@@ -59,7 +61,7 @@ export default function MapboxDirections(props) {
         <Polyline
           key={index}
           positions={route}
-          color={`hsl(${index * 60}, 100%, 50%)`} // Different colors for each route
+          color={colors[index % colors.length]} // Cycle through the colors
           weight={5} // Line thickness
           opacity={0.8} // Line transparency
           dashArray="5,10" // Dashed line pattern

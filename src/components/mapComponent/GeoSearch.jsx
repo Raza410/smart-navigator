@@ -56,17 +56,18 @@ export default function GeoSearch() {
 
   return (
     <>
-      <div className="search-container md:ml-5">
-        <input
-          type="text"
-          placeholder="Search Location"
-          className="w-full md:max-w-90 pl-10 pr-10 py-[10px] text-sm text-gray-200 bg-[#4786c7] placeholder:text-gray-200 rounded-full outline-none"
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            setIsSearchManuallyUpdated(true); 
-          }}
-        />
+      <div className="search-container md:ml-3">
+      <input
+  type="text"
+  placeholder="Search Location"
+  className="w-full max-w-[100%] md:max-w-[100%] pl-10 pr-10 py-[10px] text-sm text-gray-200 bg-[#4786c7] placeholder:text-gray-200 rounded-full outline-none"
+  value={searchTerm}
+  onChange={(e) => {
+    setSearchTerm(e.target.value);
+    setIsSearchManuallyUpdated(true); 
+  }}
+/>
+
         <FaSearch className="absolute w-4 h-4 text-gray-200 transform -translate-y-1/2 left-3 md:ml-5 top-1/2" />
         {searchTerm && (
           <FaTimes
@@ -75,19 +76,20 @@ export default function GeoSearch() {
           />
         )}
         {uniqueSearchResults.length > 0 && (
-          <div className="absolute left-0 z-10 w-full mt-1 bg-white border border-gray-300 rounded shadow-lg top-full">
-            {uniqueSearchResults.map((result) => (
-              <div
-                key={result.gid}
-                className="p-2 cursor-pointer hover:bg-gray-100"
-                onClick={() => handleResultClick(result)}
-              >
-                {searchTerm.toLowerCase().includes("facu")
-                  ? result.building_name
-                  : result.departments}
-              </div>
-            ))}
-          </div>
+          <div className="absolute left-0 z-50 w-full mt-1 bg-white border border-gray-300 rounded shadow-2xl top-full">
+          {uniqueSearchResults.map((result) => (
+            <div
+              key={result.gid}
+              className="p-2 cursor-pointer hover:bg-gray-100"
+              onClick={() => handleResultClick(result)}
+            >
+              {searchTerm.toLowerCase().includes("facu")
+                ? result.building_name
+                : result.departments}
+            </div>
+          ))}
+        </div>
+        
         )}
       </div>
       <div>

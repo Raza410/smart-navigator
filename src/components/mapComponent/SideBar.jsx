@@ -28,34 +28,34 @@ const folderNames = {
 };
 
 const slidesPerFolder = {
-  "Academic block 1": 3, 
-  "Acadamic block 2": 1,
-  "Acadamic Block 3": 3,
-  Library: 3,
-  "Medical Center": 3,
+  "Academic block 1": 3,
+  "Acadamic block 2": 4,
+  "Acadamic Block 3": 4,
+  Library: 5,
+  "Medical Center": 5,
   "Student Services Center": 3,
-  Mosque: 5,
-  "R & D LaB": 4,
-  "N Block": 3,
+  Mosque: 6,
+  "R & D LaB": 5,
+  "N Block": 4,
   Canteen: 2,
-  "Faculity block 1": 2,
-  "faculity block 2": 2,
-  "Physics Block": 3,
+  "Faculity block 1": 5,
+  "faculity block 2": 6,
+  "Physics Block": 5,
   Store: 3,
-  SSBC: 3,
+  SSBC: 4,
   "Staff Canteen": 2,
-  "Students Canteen": 2,
-  SportsComplex: 2,
+  "Students Canteen": 3,
+  SportsComplex: 3,
   "Arts Building": 1,
   "Sports Complex": 2,
 };
 
-// Function to load images based on building name
+
 const loadImages = (buildingName) => {
   const imagePaths = [];
   const normalizedBuildingName = buildingName.trim();
   const folderName = folderNames[normalizedBuildingName];
-  
+
   if (folderName) {
     console.log(`Loading images from folder: ${folderName}`);
   } else {
@@ -63,32 +63,29 @@ const loadImages = (buildingName) => {
     return imagePaths;
   }
 
-  // Define image names to check based on slidesPerFolder
-  const numberOfSlides = slidesPerFolder[normalizedBuildingName] || 0; // Default to 0 if not found
+  const numberOfSlides = slidesPerFolder[normalizedBuildingName] || 0; 
   for (let i = 1; i <= numberOfSlides; i++) {
     const imagePath = `/images/${folderName}/image${i}.jpg`;
-    
-    // Assuming images are present, push only if it's a valid path
+
     if (imagePath) {
-      imagePaths.push(imagePath); // Add only valid paths to the list
+      imagePaths.push(imagePath); 
     }
   }
 
-  return imagePaths.filter((path) => path); // Filter out any empty paths
+  return imagePaths.filter((path) => path); 
 };
 
 export default function Sidebar({ selectedBuilding, onClose }) {
   const [imagePaths, setImagePaths] = useState([]);
   const [departments, setDepartments] = useState([]);
-  const [sidebarHeight, setSidebarHeight] = useState(384);
   const sidebarRef = useRef(null);
 
   useEffect(() => {
     if (selectedBuilding.building_name || selectedBuilding.name) {
       const buildingName =
         selectedBuilding.building_name || selectedBuilding.name;
-      fetchImagesForBuilding(buildingName); // Fetch images
-      fetchDepartments(buildingName); // Fetch departments
+      fetchImagesForBuilding(buildingName); 
+      fetchDepartments(buildingName); 
     }
   }, [selectedBuilding]);
 
@@ -101,13 +98,11 @@ export default function Sidebar({ selectedBuilding, onClose }) {
         `Error loading images for building "${buildingName}":`,
         error
       );
-      setImagePaths([]); // Clear image paths if an error occurs
+      setImagePaths([]); 
     }
   };
 
 
-
-  // Fetch departments based on the building name
   const fetchDepartments = async (buildingName) => {
     try {
       const response = await fetch(
@@ -121,64 +116,40 @@ export default function Sidebar({ selectedBuilding, onClose }) {
     }
   };
 
-  // Handle touch start for mobile swipe to resize
-  const handleTouchStart = (e) => {
-    sidebarRef.current.startY = e.touches[0].clientY;
-    sidebarRef.current.startHeight = sidebarHeight;
-  };
-
-  // Handle touch move to resize the sidebar height on mobile
-  const handleTouchMove = (e) => {
-    const touchY = e.touches[0].clientY;
-    const heightDifference = sidebarRef.current.startY - touchY;
-    const newHeight = Math.min(
-      Math.max(sidebarRef.current.startHeight + heightDifference, 200),
-      window.innerHeight
-    );
-    setSidebarHeight(newHeight);
-  };
-
-  // Settings for image slider (slick-carousel)
-  // const settings = {
-  //   dots: false,
-  //   infinite: false,
-  //   // speed: 500,
-  //   slidesToShow: 1,
-  //   slidesToScroll: 0,
-  //   // autoplay: false,
-  //   arrows: false,
-  // };
-  
   const settings =
-    imagePaths.length > 1
-      ? {
-          dots: false,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          arrows: true,
-        }
-      : {
-          dots: false,
-          infinite: false,
-          slidesToShow: 1,
-          slidesToScroll: 0,
-          arrows: false,
-        };
+  imagePaths.length > 1
+    ? {
+        dots: true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
+        autoplay: true,         
+        autoplaySpeed: 2000,    
+        speed: 1000,             
+      }
+    : {
+        dots: false,
+        infinite: false,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+      };
 
 
-  // Filter out valid departments to display
   const validDepartments = departments.filter(
     (department) => department.departments
   );
 
   return (
     <div
-      className="fixed z-50 w-9/12 md:max-h-[calc(100vh-80px)] overflow-y-auto bg-white rounded-md shadow-lg left-6 top-16 md:max-w-96 md:inset-y-0 md:mt-24 mb-2 mt-8 max-h-[calc(100vh-90px)]"
-      ref={sidebarRef}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-    >
-      <div className="p-6">
+  className="fixed w-11/12 md:max-h-[calc(100vh-80px)] max-h-[50vh] overflow-y-auto bg-white rounded-md shadow-lg 
+    left-1/2 md:left-6 transform md:translate-x-0 -translate-x-1/2 md:top-1 top-72 md:max-w-96 md:inset-y-0 md:mt-24 mb-2 "
+  ref={sidebarRef}
+>
+
+
+      <div className="px-4 py-2">
         <div className="flex justify-end">
           <button
             onClick={onClose}
@@ -187,7 +158,7 @@ export default function Sidebar({ selectedBuilding, onClose }) {
             <XMarkIcon className="w-6 h-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="mt--3">
+        <div className="">
           <h2 className="mb-4 text-2xl font-semibold text-gray-600">
             {selectedBuilding.building_name || selectedBuilding.name}
           </h2>
@@ -202,16 +173,14 @@ export default function Sidebar({ selectedBuilding, onClose }) {
                 {imagePaths.length === 1 ? (
                   <img
                     src={imagePaths[0]}
-                    alt={`Single image for ${
-                      selectedBuilding.building_name || selectedBuilding.name
-                    }`}
+                    alt={`Single image for ${selectedBuilding.building_name || selectedBuilding.name}`}
                     className="w-full h-full bg-cover rounded-lg"
                     style={{ minHeight: "250px" }}
                   />
                 ) : (
                   <Slider {...settings}>
                     {imagePaths.map((imagePath, index) =>
-                      imagePath ? ( // Ensure only valid image paths are shown
+                      imagePath ? ( 
                         <div key={index} className="image-slide">
                           <img
                             src={imagePath}
@@ -224,6 +193,8 @@ export default function Sidebar({ selectedBuilding, onClose }) {
                     )}
                   </Slider>
                 )}
+
+                
               </>
             )}
           </div>
@@ -250,3 +221,6 @@ export default function Sidebar({ selectedBuilding, onClose }) {
     </div>
   );
 }
+
+
+

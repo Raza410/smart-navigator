@@ -103,53 +103,54 @@ function Map({ children, style }) {
 
   const onEachBuilding = (feature, layer) => {
     if (feature.properties && feature.properties.name) {
-      const buildingName = feature.properties.name; // Get building name
-      const imagePath = loadBuildingImage(buildingName); // Load the image based on the building name
-
+      const buildingName = feature.properties.name;
+      const imagePath = loadBuildingImage(buildingName);
+  
       const popupContent = `
-  <div style="text-align: center;">
-  <img 
-    src="${imagePath}" 
-    alt="${buildingName}" 
-    class="image-popup rounded-sm pt-2" 
-    style="max-width: 228px; max-height: 228px;" 
-    onerror="this.onerror=null; this.src='/images/default.jpg';" 
-  />
-</div>
-
-
-  <h3 style="text-align: center; margin-top:5px; padding-top: 10px; border-radius: 4px;">
-    ${feature.properties.name}
-  </h3>
-  <span id="details-link" style="text-align: center; display: block; cursor:pointer; font-weight:bold"> See Details</span>
-`;
-
-
-      layer.bindPopup(popupContent); // Bind the popup content to the layer
-
+        <div style="text-align: center;">
+          <img 
+            src="${imagePath}" 
+            alt="${buildingName}" 
+            class="image-popup rounded-sm pt-2" 
+            style="max-width: 228px; max-height: 228px;" 
+            onerror="this.onerror=null; this.src='/images/default.jpg';" 
+          />
+        </div>
+        <h3 style="text-align: center; margin-top:5px; padding-top: 10px; border-radius: 4px;">
+          ${feature.properties.name}
+        </h3>
+        <span id="details-link" style="text-align: center; display: block; cursor:pointer; font-weight:bold"> See Details</span>
+      `;
+  
+      layer.bindPopup(popupContent);
+  
       // Handle popup open event
       layer.on("popupopen", (event) => {
         const detailsLink = document.getElementById("details-link");
+  
         if (detailsLink) {
+          // Remove any previous click handlers to avoid issues with multiple popups
+          detailsLink.onclick = null;
+  
           detailsLink.onclick = (e) => {
-            e.stopPropagation(); // Prevent click from propagating to the layer
-            setSelectedBuilding(event.target.feature.properties); // Set the selected building and open sidebar
+            e.stopPropagation(); // Prevent click from propagating to the map layer
+  
+            // Close the popup before setting the selected building
+            layer.closePopup();
+  
+            // Set the selected building and open the sidebar
+            setSelectedBuilding(feature.properties); 
           };
         }
       });
-
-      // Remove the click event handler that opens the sidebar
-      // layer.on("click", (event) => {
-      //   if (event.target._path !== null) { // Check if the clicked target is the layer
-      //     console.log("Loading image from path:", imagePath); // Log the image path
-      //     setSelectedBuilding(event.target.feature.properties); // This line causes the sidebar to open
-      //   }
-      // });
+  
+      // Reset sidebar when the popup closes
+      layer.on("popupclose", () => {
+        setSelectedBuilding(null); // Clear the sidebar on popup close
+      });
     }
   };
-
-
-
+  
   return (
     <>
       <Navbar />
@@ -203,7 +204,7 @@ function Map({ children, style }) {
             <HandleGeoSearch onLocationSelected={setSearchLocation} />
 
             {userLocation && <Marker position={userLocation} />}
-            {/* {searchLocation && <Marker position={searchLocation} />} */}
+
             {searchLocation && (
               Array.isArray(searchLocation[0]) ? (
                 // If searchLocation is an array of arrays
