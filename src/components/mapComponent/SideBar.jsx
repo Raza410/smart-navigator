@@ -144,8 +144,8 @@ export default function Sidebar({ selectedBuilding, onClose }) {
 
   return (
     <div
-  className="fixed w-11/12 md:max-h-[calc(100vh-80px)] max-h-[56vh] overflow-y-auto bg-white rounded-md shadow-lg 
-    left-1/2 md:left-6 transform md:translate-x-0 -translate-x-1/2 md:top-1 top-72 md:max-w-96 md:inset-y-0 md:mt-24 "
+    className="fixed w-11/12 md:max-h-[calc(100vh-80px)] max-h-[56vh] overflow-y-auto bg-white rounded-md shadow-lg 
+    left-1/2 md:left-6 transform md:translate-x-0 -translate-x-1/2 md:top-1 top-72 md:max-w-96 md:inset-y-0 md:mt-24 sidebar-scroll"
   ref={sidebarRef}
 >
 
